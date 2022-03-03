@@ -3,7 +3,9 @@
  
  ## Steps to make a clone local
  1. Create a venv running Python 3.7.4 ```virtualenv --python "PYTHON PATH HERE" haf ```
-
+ 2. Activate venv ```.\haf\Scripts\activate```
+ 3. Install requirements ```pip install -r requirements.txt```
+ 4. Run with ```python manage.py runserver```
 
 
 
