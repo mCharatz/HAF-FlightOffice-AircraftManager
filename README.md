@@ -1,3 +1,3 @@
 # Flight Office Pilots Scheduler
  A system to manage pilots flighting hours for the Hellenic Air Force
- ![alt text](https://en.wikipedia.org/wiki/Hellenic_Air_Force#/media/File:Seal_of_the_Hellenic_Air_Force.svg)
+![800px-Seal_of_the_Hellenic_Air_Force svg](https://user-images.githubusercontent.com/20220057/156535164-c99ee17d-7b28-454f-b39a-9614c1f528a6.png)
