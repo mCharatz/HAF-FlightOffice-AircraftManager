@@ -1,5 +1,10 @@
 /* Show it is fixed to the top */
 body {
-  min-height: 75rem;
   padding-top: 4.5rem;
 }
+
+.tableFixHead          { overflow: auto; height: 75vh; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+
+input {border-width:0px;
+  border:none;}
