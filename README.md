@@ -2,7 +2,7 @@
  A system to manage pilots flighting hours of CL-415 aircrafts. Created as an internal project of my army duties
  
  ## Steps to make a clone local
- 1. Create a venv running Python 3.7.4 ```console virtualenv --python "PYTHON PATH HERE" haf ```
+ 1. Create a venv running Python 3.7.4 ```virtualenv --python "PYTHON PATH HERE" haf ```
 
 
 
