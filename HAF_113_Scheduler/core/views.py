@@ -6,5 +6,5 @@ from django.http import HttpResponse
 def home(request):
     return render(request,'core/index.html')
 
-def storage(request):
-    return HttpResponse('storage')
+def upload(request):
+    return render(request,'core/upload_file.html')
