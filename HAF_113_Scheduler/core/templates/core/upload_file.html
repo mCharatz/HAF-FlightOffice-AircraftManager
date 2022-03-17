@@ -4,18 +4,16 @@
 {% block content %}
 <div class="row">
 <div class="col-sm">
-    <h3> Αρχέια ωρών πιλότων </h3>
-    <input class="form-control form-control-lg" id="formFileLg" type="file">
-    <br>
-    <button type="button" class="btn btn-success">Ανέβασμα</button>
+    <h3> Προσθέστε ένα αρχείο </h3>
+    <form id="fileUpload" method="post" action="{% url 'proccess_data' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="form-control form-control-lg" id="file" name="files" type="file" accept="application/pdf" required>
+        <br>
+        <button type="submit" class="btn btn-success">Προσθήκη</button>
+    </form>
 </div>
 <br>
-<div class="col-sm">
-    <h3> Αρχέια ωρών εκπαιδευτών </h3>
-    <input class="form-control form-control-lg" id="formFileLg" type="file">
-    <br>
-    <button type="button" class="btn btn-success">Ανέβασμα</button>
-</div>
 </div>
 {% endblock content %}}
+
 

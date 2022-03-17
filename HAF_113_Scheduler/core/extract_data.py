@@ -69,11 +69,11 @@ def trainer_data_from_tsv(data):
 file = open('train.pdf', 'rb')
 readpdf = PyPDF2.PdfFileReader(file)
 total_pages = readpdf.numPages + 1
-'''for i in range(1,total_pages):
+for i in range(1,total_pages):
     filename = str(i)+"_train.tsv"
     print(filename)
     print(str(i))
-    tabula.convert_into("train.pdf",filename,output_format="tsv", lattice=True,stream=True,pages=str(i))'''
+    tabula.convert_into("train.pdf",filename,output_format="tsv", lattice=True,stream=True,pages=str(i))
 
 for i in range(1,total_pages):
     filename = str(i)+".tsv"
