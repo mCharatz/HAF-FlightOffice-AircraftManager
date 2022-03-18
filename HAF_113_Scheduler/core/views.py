@@ -25,7 +25,7 @@ def proccess_uploaded_data(request):
                     return redirect("/")
             except:
                 return redirect("/")
-            create_tsv_files(file_db)
-            return HttpResponse("ok")
+            a = create_tsv_files(file_db)
+            return HttpResponse(a)
     return render(request,'core/pilot_hours.html')
 
