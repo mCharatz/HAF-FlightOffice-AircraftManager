@@ -1,23 +1,10 @@
 {% extends 'core/core.html' %}
 {%load static%}
 
-{% block selected_tab %}
-<ul class="navbar-nav me-auto mb-2 mb-md-0">
-  <li class="nav-item">
-  <a class="nav-link active" aria-current="page" href="#">Home</a>
-  </li>
-  <li class="nav-item">
-  <a class="nav-link" href="#">Links</a>
-  </li>
-  <li class="nav-item">
-  <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-  </li>
-</ul>
-{% endblock selected_tab %}
 
 
 {% block content %}
-{% if table_data %}
+{% if table_data and file_type == 1 %}
     <div class="btn-group" style="float:right;" role="group" aria-label="Basic example">
       <button type="button" class="btn btn-danger">Απόρριψη</button>
       <button type="button" class="btn btn-success">Αποθήκευση</button>
@@ -53,29 +40,60 @@
               <th scope="row">{{ pilot.0 }}</th>
               <td><input type="text" id="{{ pilot.1 }}_asma" name="{{ pilot.1 }}_asma" value={{pilot.1}}></td>
               <td><input type="text" id="{{ pilot.1 }}_lastname" name="{{ pilot.1 }}_lastname" value={{pilot.2}}></td>
-              <td>{{pilot.3}}</td>
-              <td>{{pilot.4}}</td>
-              <td>{{pilot.5}}</td>
-              <td>{{pilot.6}}</td>
-              <td>{{pilot.7}}</td>
-              <td>{{pilot.8}}</td>
-              <td>{{pilot.9}}</td>
-              <td>{{pilot.10}}</td>
-              <td>{{pilot.11}}</td>
-              <td>{{pilot.12}}</td>
-              <td>{{pilot.13}}</td>
-              <td>{{pilot.14}}</td>
-              <td>{{pilot.15}}</td>
-              <td>{{pilot.16}}</td>
-              <td>{{pilot.17}}</td>
+              <td><input type="text" id="{{ pilot.1 }}_name" name="{{ pilot.1 }}_name" value={{pilot.3}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_rank" name="{{ pilot.1 }}_rank" value={{pilot.4}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_spec" name="{{ pilot.1 }}_spec" value={{pilot.5}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_plane" name="{{ pilot.1 }}_plane" value={{pilot.6}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_capthours" name="{{ pilot.1 }}_capthours" value={{pilot.7}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_cocapthours" name="{{ pilot.1 }}_cocapthours" value={{pilot.8}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_ifrhours" name="{{ pilot.1 }}_ifrhours" value={{pilot.9}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_nighthours" name="{{ pilot.1 }}_nighthours" value={{pilot.10}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_nauthours" name="{{ pilot.1 }}_nauthours" value={{pilot.11}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_crewhours" name="{{ pilot.1 }}_crewhours" value={{pilot.12}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_category" name="{{ pilot.1 }}_category" value={{pilot.13}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_unit" name="{{ pilot.1 }}_unit" value={{pilot.14}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_month" name="{{ pilot.1 }}_month" value={{pilot.15}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_year" name="{{ pilot.1 }}_year" value={{pilot.16}}></td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
+  {% elif table_data and file_type == 2%}
+  <div class="btn-group" style="float:right;" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-danger">Απόρριψη</button>
+    <button type="button" class="btn btn-success">Αποθήκευση</button>
+  </div>
+  <h3>Ώρες Εκπαιδευτών</h3>
+  <div class="tableFixHead">
+    <table class="table table-hover table-bordered">
+      <thead class="table-dark" style="position: sticky;top: 0">
+        <tr>
+          <th scope="col">Α/Α</th>
+          <th scope="col">ΒΑΘΜΟΣ</th>
+          <th scope="col">ΕΠΩΝΥΜΟ</th>
+          <th scope="col">ΑΜΑ</th>
+          <th scope="col">Α/Φ</th>
+          <th scope="col">ΩΡΕΣ</th>
+        </tr>
+      </thead>
+      <tbody >
+        {% for trainer in table_data%}
+          <tr>
+            <th scope="row">{{ trainer.0 }}</th>
+            <td><input type="text" id="{{ trainer.1 }}_asma" name="{{ trainer.1 }}_asma" value={{trainer.1}}></td>
+            <td><input type="text" id="{{ trainer.1 }}_lastname" name="{{ trainer.1 }}_lastname" value={{trainer.2}}></td>
+            <td><input type="text" id="{{ trainer.1 }}_asma" name="{{ trainer.1 }}_asma" value={{trainer.3}}></td>
+            <td><input type="text" id="{{ trainer.1 }}_plane" name="{{ trainer.1 }}_plane" value={{trainer.4}}></td>
+            <td><input type="text" id="{{ trainer.1 }}_hours" name="{{ trainer.1 }}_hours" value={{trainer.5}}></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   {% else %}
   <div class="alert alert-danger" role="alert">
-    Το αρχείο που προσθέσατε δεν έχει την προκαθορισμένη δομηζζζ
+    Το αρχείο που προσθέσατε δεν έχει την προκαθορισμένη δομή.
   </div>
   {% endif %}
 {% endblock content%}

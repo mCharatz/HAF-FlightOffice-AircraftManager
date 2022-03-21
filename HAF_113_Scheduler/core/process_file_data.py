@@ -1,3 +1,4 @@
+from audioop import mul
 from tkinter import N
 from tkinter.messagebox import NO
 import tabula
@@ -10,19 +11,27 @@ import os
 
 def create_tsv_files(file):
     try:
+        guard = 1 # 1 gia ores, 2 gia trainers
         logger = logging.getLogger("mylogger")
         filename = 'media/' + str(uuid.uuid4()) + ".tsv"
         tabula.convert_into(file.file,filename,output_format="tsv", lattice=True,stream=True,pages="all")
         tsv_file = open(filename)
-        read_tsv = csv.reader(tsv_file,delimiter='\t')
-        multi_list = proccess_tsv_file(list(read_tsv))
+        read_tsv_list = list(csv.reader(tsv_file,delimiter='\t'))
+        multi_list = proccess_tsv_file(read_tsv_list)
+        if not multi_list:
+            #TRAINERS
+            guard = 2
+            multi_list = proccess_tsv_file_train(read_tsv_list)
         tsv_file.close()
         os.remove(filename)
         file.file.close()
-        return_data = extract_data_from_multi_list(multi_list)
+        if guard == 1:
+            return_data = extract_data_from_multi_list(multi_list)
+        else:
+            return_data = multi_list
     except:
-        return None
-    return return_data
+        return None,None
+    return return_data,guard
 
 def proccess_tsv_file(data):
     try:
@@ -39,9 +48,20 @@ def proccess_tsv_file(data):
         return None
     return multi_list
 
+def proccess_tsv_file_train(data):
+    logger = logging.getLogger("mylogger")
+    trainer_list = []
+    for trainer in data:
+        if len(trainer) != 6:
+            continue
+        elif trainer == ['', 'ΒΑΘΜΟΣ', 'ΕΠΩΝΥΜΟ', 'ΑΜΑ', 'Α/Φ', 'ΩΡΕΣ']:
+            continue
+        else:
+            trainer_list.append(trainer)
+    return trainer_list
+
 def extract_data_from_multi_list(multi_list):
     try:
-        multi_return_data = []
         pilot_list = []
         for table in multi_list:
             if ['ΕΤΟΣ'] in table:
@@ -78,5 +98,3 @@ def extract_data_from_multi_list(multi_list):
         return pilot_list
     except:
         return None
-
-    return multi_return_data

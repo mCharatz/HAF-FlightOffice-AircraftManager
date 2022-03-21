@@ -24,12 +24,12 @@ def proccess_uploaded_data(request):
                 if file_db == None:
                     return redirect("/")
 
-                table_data = create_tsv_files(file_db)
+                table_data,file_type = create_tsv_files(file_db)
                 file_db.delete()
             except:
                 return redirect("/")
             
-            context = {'table_data': table_data}
+            context = {'table_data': table_data,'file_type':file_type}
             return render(request,'core/pilot_hours.html',context)
     return redirect("/")
 
