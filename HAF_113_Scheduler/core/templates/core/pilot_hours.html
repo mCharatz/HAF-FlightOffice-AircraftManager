@@ -5,9 +5,11 @@
 
 {% block content %}
 {% if table_data and file_type == 1 %}
+  <form method="post" action="{% url 'save_uploaded_data'%}">
+    {% csrf_token %}
     <div class="btn-group" style="float:right;" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-danger">Απόρριψη</button>
-      <button type="button" class="btn btn-success">Αποθήκευση</button>
+      <a href={% url 'upload_file' %} class="button btn btn-danger">Απόρριψη</a>
+      <button type="submit" class="btn btn-success">Αποθήκευση</button>
     </div>
     <h3>Ώρες Πιλότων</h3>
 
@@ -38,31 +40,34 @@
           {% for pilot in table_data%}
             <tr>
               <th scope="row">{{ pilot.0 }}</th>
-              <td><input type="text" id="{{ pilot.1 }}_asma" name="{{ pilot.1 }}_asma" value={{pilot.1}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_lastname" name="{{ pilot.1 }}_lastname" value={{pilot.2}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_name" name="{{ pilot.1 }}_name" value={{pilot.3}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_rank" name="{{ pilot.1 }}_rank" value={{pilot.4}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_spec" name="{{ pilot.1 }}_spec" value={{pilot.5}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_plane" name="{{ pilot.1 }}_plane" value={{pilot.6}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_capthours" name="{{ pilot.1 }}_capthours" value={{pilot.7}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_cocapthours" name="{{ pilot.1 }}_cocapthours" value={{pilot.8}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_ifrhours" name="{{ pilot.1 }}_ifrhours" value={{pilot.9}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_nighthours" name="{{ pilot.1 }}_nighthours" value={{pilot.10}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_nauthours" name="{{ pilot.1 }}_nauthours" value={{pilot.11}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_crewhours" name="{{ pilot.1 }}_crewhours" value={{pilot.12}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_category" name="{{ pilot.1 }}_category" value={{pilot.13}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_unit" name="{{ pilot.1 }}_unit" value={{pilot.14}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_month" name="{{ pilot.1 }}_month" value={{pilot.15}}></td>
-              <td><input type="text" id="{{ pilot.1 }}_year" name="{{ pilot.1 }}_year" value={{pilot.16}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_asma" name="{{ pilot.1 }}" value={{pilot.1}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_lastname" name="{{ pilot.1 }}" value={{pilot.2}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_name" name="{{ pilot.1 }}" value={{pilot.3}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_rank" name="{{ pilot.1 }}" value={{pilot.4}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_spec" name="{{ pilot.1 }}" value={{pilot.5}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_plane" name="{{ pilot.1 }}" value={{pilot.6}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_capthours" name="{{ pilot.1 }}" value={{pilot.7}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_cocapthours" name="{{ pilot.1 }}" value={{pilot.8}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_ifrhours" name="{{ pilot.1 }}" value={{pilot.9}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_nighthours" name="{{ pilot.1 }}" value={{pilot.10}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_nauthours" name="{{ pilot.1 }}" value={{pilot.11}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_crewhours" name="{{ pilot.1 }}" value={{pilot.12}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_category" name="{{ pilot.1 }}" value={{pilot.13}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_unit" name="{{ pilot.1 }}" value={{pilot.14}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_month" name="{{ pilot.1 }}" value={{pilot.15}}></td>
+              <td><input type="text" id="{{ pilot.1 }}_year" name="{{ pilot.1 }}" value={{pilot.16}}></td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
+  </form>
   {% elif table_data and file_type == 2%}
-  <div class="btn-group" style="float:right;" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-danger">Απόρριψη</button>
-    <button type="button" class="btn btn-success">Αποθήκευση</button>
+  <form method="post" action="{% url 'save_uploaded_data'%}">
+    {% csrf_token %}
+    <div class="btn-group" style="float:right;" role="group" aria-label="Basic example">
+      <a href={% url 'upload_file' %} class="button btn btn-danger">Απόρριψη</a>
+    <button type="submit" class="btn btn-success">Αποθήκευση</button>
   </div>
   <h3>Ώρες Εκπαιδευτών</h3>
   <div class="tableFixHead">
@@ -81,16 +86,17 @@
         {% for trainer in table_data%}
           <tr>
             <th scope="row">{{ trainer.0 }}</th>
-            <td><input type="text" id="{{ trainer.1 }}_asma" name="{{ trainer.1 }}_asma" value={{trainer.1}}></td>
-            <td><input type="text" id="{{ trainer.1 }}_lastname" name="{{ trainer.1 }}_lastname" value={{trainer.2}}></td>
-            <td><input type="text" id="{{ trainer.1 }}_asma" name="{{ trainer.1 }}_asma" value={{trainer.3}}></td>
-            <td><input type="text" id="{{ trainer.1 }}_plane" name="{{ trainer.1 }}_plane" value={{trainer.4}}></td>
-            <td><input type="text" id="{{ trainer.1 }}_hours" name="{{ trainer.1 }}_hours" value={{trainer.5}}></td>
+            <td><input type="text" id="{{ trainer.3 }}_rank" name="{{ trainer.3 }}" value={{trainer.1}}></td>
+            <td><input type="text" id="{{ trainer.3 }}_lastname" name="{{ trainer.3 }}" value={{trainer.2}}></td>
+            <td><input type="text" id="{{ trainer.3 }}_asma" name="{{ trainer.3 }}" value={{trainer.3}}></td>
+            <td><input type="text" id="{{ trainer.3 }}_plane" name="{{ trainer.3 }}" value={{trainer.4}}></td>
+            <td><input type="text" id="{{ trainer.3 }}_hours" name="{{ trainer.3 }}" value={{trainer.5}}></td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+  </form>
   {% else %}
   <div class="alert alert-danger" role="alert">
     Το αρχείο που προσθέσατε δεν έχει την προκαθορισμένη δομή.

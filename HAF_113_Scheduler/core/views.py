@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import UploadFileForm
 from .process_file_data import *
+from .save_file_data import *
 from .models import *
 # Create your views here.
 
@@ -33,3 +34,29 @@ def proccess_uploaded_data(request):
             return render(request,'core/pilot_hours.html',context)
     return redirect("/")
 
+def save_uploaded_data(request):
+    #TODO FIX THIS IN ORDER TO SAVE DATA
+    logger = logging.getLogger("mylogger")
+    if request.method == "POST":
+        data = request.POST.lists()
+        for airman in data:
+            if len(airman[1]) != 16:
+                continue
+            try:
+                airman_item = Airman.objects.get(asma=airman[1][0])
+            except:
+                airman_item = Airman.objects.create(
+                    asma = airman[1][0],
+                    firstname = airman[1][1],
+                    lastname = airman[1][2],
+                    rank = airman[1][2],
+                    eidikotita = airman[1][4]
+                )
+            FlightHours.objects.create(
+                airman = airman_item,
+                plane = airman[1][5]
+            )
+        return HttpResponse("ok")
+    else:
+        return redirect("/")
+    
