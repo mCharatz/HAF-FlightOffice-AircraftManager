@@ -33,12 +33,14 @@ class FlightHours(models.Model):
     category = models.CharField(max_length=200,default="",blank=True,null=True)
     unit = models.CharField(max_length=200,default="",blank=True,null=True)
     month = models.CharField(max_length=200,default="",blank=True,null=True)
-    year = models.IntegerField(blank=True,null=True)
+    year = models.CharField(max_length=200,default="",blank=True,null=True)
 
 class TrainHours(models.Model):
     airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
     plane = models.CharField(max_length=200,default="",blank=True,null=True)
     hours = models.FloatField(blank=True,null=True,default=0)
+    month = models.CharField(max_length=200,default="",blank=True,null=True)
+    year = models.CharField(max_length=200,default="",blank=True,null=True)
 
 
 @receiver(models.signals.post_delete, sender=UploadedFile)

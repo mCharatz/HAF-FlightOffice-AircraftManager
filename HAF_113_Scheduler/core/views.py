@@ -1,8 +1,10 @@
+from calendar import month
 import imp
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import UploadFileForm
 from .process_file_data import *
+from .save_file_data import save_data
 from .save_file_data import *
 from .models import *
 # Create your views here.
@@ -36,26 +38,33 @@ def proccess_uploaded_data(request):
 
 def save_uploaded_data(request):
     #TODO FIX THIS IN ORDER TO SAVE DATA
+    months = {
+        1: 'ΙΑΝΟΥΑΡΙΟΣ',
+        2: 'ΦΕΒΡΟΥΑΡΙΟΣ',
+        3: 'ΜΑΡΤΙΟΣ',
+        4: 'ΑΠΡΙΛΙΟΣ',
+        5: 'ΜΑΙΟΣ',
+        6: 'ΙΟΥΝΙΟΣ',
+        7: 'ΙΟΥΛΙΟΣ',
+        8: 'ΑΥΓΟΥΣΤΟΣ',
+        9: 'ΣΕΠΤΕΜΒΡΙΟΣ',
+        10: 'ΟΚΤΩΒΡΙΟΣ',
+        11: 'ΝΟΕΜΒΡΙΟΣ',
+        12: 'ΔΕΚΕΜΒΡΙΟΣ'
+    }
     logger = logging.getLogger("mylogger")
     if request.method == "POST":
         data = request.POST.lists()
-        for airman in data:
-            if len(airman[1]) != 16:
-                continue
-            try:
-                airman_item = Airman.objects.get(asma=airman[1][0])
-            except:
-                airman_item = Airman.objects.create(
-                    asma = airman[1][0],
-                    firstname = airman[1][1],
-                    lastname = airman[1][2],
-                    rank = airman[1][2],
-                    eidikotita = airman[1][4]
-                )
-            FlightHours.objects.create(
-                airman = airman_item,
-                plane = airman[1][5]
-            )
+        data2 = copy.copy(data)
+        logger.info("EEEE\n")
+        for item in data2:
+            if item[0] == 'date_year':
+                date_year = item[1][0].split('-')
+                date_year[1] = months.get(int(date_year[1]))
+                logger.info(date_year)
+                break
+        logger.info(date_year)
+        save_data(data)
         return HttpResponse("ok")
     else:
         return redirect("/")
