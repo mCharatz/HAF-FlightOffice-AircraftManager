@@ -2,11 +2,11 @@ from .models import *
 import logging
 import copy
 
-def save_data(data):
-    logger = logging.getLogger("mylogger")
-    data2 = copy.copy(data)
-    for_flightgours(data)
-    for_trainhours(data2)
+def save_data(data,month=None,year=None):
+    if month == None or year == None:
+        for_flightgours(data)
+    else:
+        for_trainhours(data,month,year)
     return True
 
 def replace(str1):
@@ -63,12 +63,15 @@ def for_flightgours(flighthours):
         return False
     return True
 
-def for_trainhours(trainhours):
+def for_trainhours(trainhours,month,year):
     logger = logging.getLogger("mylogger")
     for trainhour in trainhours:
         if len(trainhour[1]) != 5:
             continue
-        trainhour[1][4] = replace(trainhour[1][4])
+        try:
+            trainhour[1][4] = replace(trainhour[1][4])
+        except:
+            continue
 
         try:
             airman_item = Airman.objects.get(asma=trainhour[1][2])
@@ -81,15 +84,15 @@ def for_trainhours(trainhours):
         try:
             flight_hour_item = TrainHours.objects.get(
                 airman = airman_item,
-                month = trainhour[2],
-                year = trainhour[3]
+                month = month,
+                year = year
             )
         except:
             TrainHours.objects.create(
                 airman = airman_item,
                 plane = trainhour[1][3],
                 hours = trainhour[1][4],
-                month = trainhour[2],
-                year = trainhour[3]
+                month = month,
+                year = year
             )
     return True

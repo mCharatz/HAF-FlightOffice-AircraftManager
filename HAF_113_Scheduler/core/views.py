@@ -55,16 +55,18 @@ def save_uploaded_data(request):
     logger = logging.getLogger("mylogger")
     if request.method == "POST":
         data = request.POST.lists()
-        data2 = copy.copy(data)
-        logger.info("EEEE\n")
+        data2 = list(copy.copy(data))
+        month = None
+        year = None
         for item in data2:
-            if item[0] == 'date_year':
-                date_year = item[1][0].split('-')
-                date_year[1] = months.get(int(date_year[1]))
-                logger.info(date_year)
-                break
-        logger.info(date_year)
-        save_data(data)
+            if item[0] == 'month':
+                month = item[1][0]
+            elif item[0] == 'year':
+                year = item[1][0]
+        
+        logger.info(month)
+        logger.info(year)
+        save_data(data,month,year)
         return HttpResponse("ok")
     else:
         return redirect("/")

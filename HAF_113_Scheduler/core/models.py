@@ -20,6 +20,8 @@ class Airman(models.Model):
     katigoria_ptitikou = models.CharField(max_length=200,default="",blank=True,null=True)
     monada_ekdosis_ptitikou = models.CharField(max_length=200,default="",blank=True,null=True)
     geniko_synolo_oron = models.FloatField(blank=True,null=True,default=0)
+    def __str__(self):
+        return (str(self.asma) + " - " + self.lastname + " " + self.firstname)
 
 class FlightHours(models.Model):
     airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
@@ -34,6 +36,8 @@ class FlightHours(models.Model):
     unit = models.CharField(max_length=200,default="",blank=True,null=True)
     month = models.CharField(max_length=200,default="",blank=True,null=True)
     year = models.CharField(max_length=200,default="",blank=True,null=True)
+    def __str__(self):
+        return (str(self.airman.asma) + " - " + self.airman.lastname + " - "+ self.month + " " + self.year)
 
 class TrainHours(models.Model):
     airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
@@ -41,6 +45,8 @@ class TrainHours(models.Model):
     hours = models.FloatField(blank=True,null=True,default=0)
     month = models.CharField(max_length=200,default="",blank=True,null=True)
     year = models.CharField(max_length=200,default="",blank=True,null=True)
+    def __str__(self):
+        return (str(self.airman.asma) + " - " + self.airman.lastname + " - "+ self.month + " " + self.year)
 
 
 @receiver(models.signals.post_delete, sender=UploadedFile)
