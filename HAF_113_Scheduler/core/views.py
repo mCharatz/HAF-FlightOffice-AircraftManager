@@ -71,3 +71,27 @@ def save_uploaded_data(request):
     else:
         return redirect("/")
     
+def flight_hours(request):
+    table_data = FlightHours.objects.all().order_by('airman__lastname')
+    context = {'table_data':table_data}
+    return render(request,'core/flight_hours_page.html',context)
+
+def train_hours(request):
+    context = {}
+    table_data = TrainHours.objects.all().order_by('airman__lastname')
+    context = {'table_data':table_data}
+    return render(request,'core/train_hours_page.html',context)
+
+def profile(request,asma):
+    try:
+        airman = Airman.objects.get(asma=asma)
+        flight_hours = FlightHours.objects.filter(airman=airman)
+        train_hours = TrainHours.objects.filter(airman=airman)
+    except:
+        return redirect('/')
+    context = {
+        'pilot':airman,
+        'flight_hours':flight_hours,
+        'train_hours':train_hours
+    }
+    return render(request,'core/airman_profile.html',context)

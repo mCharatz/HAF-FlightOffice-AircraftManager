@@ -29,11 +29,16 @@ def for_flightgours(flighthours):
             flighthour[1][11] = replace(flighthour[1][11])
             try:
                 airman_item = Airman.objects.get(asma=flighthour[1][0])
+                airman_item.lastname = flighthour[1][1]
+                airman_item.firstname = flighthour[1][2]
+                airman_item.rank = flighthour[1][3]
+                airman_item.eidikotita = flighthour[1][4]
+                airman_item.save()
             except:
                 airman_item = Airman.objects.create(
                     asma = flighthour[1][0],
-                    firstname = flighthour[1][1],
-                    lastname = flighthour[1][2],
+                    lastname = flighthour[1][1],
+                    firstname = flighthour[1][2],
                     rank = flighthour[1][3],
                     eidikotita = flighthour[1][4]
                 )
@@ -75,6 +80,9 @@ def for_trainhours(trainhours,month,year):
 
         try:
             airman_item = Airman.objects.get(asma=trainhour[1][2])
+            airman_item.lastname = trainhour[1][1]
+            airman_item.rank = trainhour[1][0]
+            airman_item.save()
         except:
             airman_item = Airman.objects.create(
                 asma = trainhour[1][2],
