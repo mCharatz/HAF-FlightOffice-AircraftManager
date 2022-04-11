@@ -63,11 +63,8 @@ def save_uploaded_data(request):
                 month = item[1][0]
             elif item[0] == 'year':
                 year = item[1][0]
-        
-        logger.info(month)
-        logger.info(year)
-        save_data(data,month,year)
-        return HttpResponse("ok")
+    
+        return save_data(data,month,year)
     else:
         return redirect("/")
     

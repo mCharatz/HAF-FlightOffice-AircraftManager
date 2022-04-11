@@ -2,23 +2,87 @@
 {%load static%}
 
 {% block content%}
-{{pilot}}
-{{flight_hours}}
-{{train_hours}}
-<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
-    </ul>
-    <div class="card-body">
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </div>
-  </div>
+<h3> {{pilot}} </h3>
+<hr>
+<h4 style="text-align:center"> Ώρες Εκπαιδευτών </h4>
+<div class="tableFixHeadSmall">
+  <table class="table table-hover table-bordered">
+    <thead class="table-dark" style="position: sticky;top: 0">
+      <tr>
+        <th scope="col">ΠΡΟΦΙΛ</th>
+        <th scope="col">ΑΜΑ</th>
+        <th scope="col">ΕΠΩΝΥΜΟ</th>
+        <th scope="col">ΒΑΘΜΟΣ</th>
+        <th scope="col">Α/Φ</th>
+        <th scope="col">ΩΡΕΣ</th>
+        <th scope="col">ΜΗΝΑΣ</th>
+        <th scope="col">ΕΤΟΣ</th>
+      </tr>
+    </thead>
+    <tbody >
+      {% for trainer in train_hours%}
+        <tr>
+          <td><a href={% url 'profile' trainer.airman.asma %}><i class="fa-solid fa-user"></i></a></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_asma" name="{{ trainer.airman.asma }}" value={{trainer.airman.asma}} disabled></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_lastname" name="{{ trainer.airman.lastname }}" value={{trainer.airman.lastname}}></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_rank" name="{{ trainer.airman.rank }}" value={{trainer.airman.rank}}></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_plane" name="{{ trainer.plane }}" value={{trainer.plane}}></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_hours" name="{{ trainer.hours }}" value={{trainer.hours}}></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_month" name="{{ trainer.month }}" value={{trainer.month}}></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_year" name="{{ trainer.year }}" value={{trainer.year}}></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<hr>
+<h4 style="text-align:center"> Ώρες Πτήσεων </h4>
+<div class="tableFixHeadSmall">
+  <table class="table table-hover table-bordered">
+    <thead class="table-dark" style="position: sticky;top: 0">
+      <tr>
+        <th scope="col">ΠΡΟΦΙΛ</th>
+        <th scope="col">ΑΜΑ</th>
+        <th scope="col">ΕΠΩΝΥΜΟ</th>
+        <th scope="col">ΟΝΟΜΑ</th>
+        <th scope="col">ΒΑΘΜΟΣ</th>
+        <th scope="col">ΕΙΔΙΚ</th>
+        <th scope="col">ΑΦΟΣ</th>
+        <th scope="col">ΚΥΒ/ΤΗΣ (ΩΡΕΣ)</th>
+        <th scope="col">ΣΥΓΚ/ΤΗΣ (ΩΡΕΣ)</th>
+        <th scope="col">IFR (ΩΡΕΣ)</th>
+        <th scope="col">ΝΥΧΤΑ (ΩΡΕΣ)</th>
+        <th scope="col">ΝΑΥΤΙΛΙΑ (ΩΡΕΣ)</th>
+        <th scope="col">ΠΛΗΡΩΜΑ (ΩΡΕΣ)</th>
+        <th scope="col">ΚΑΤΗΓΟΡΙΑ (6ΜΗΝΟ/18ΜΗΝΟ)</th>
+        <th scope="col">ΜΟΝΑΔΑ</th>
+        <th scope="col">ΜΗΝΑΣ</th>
+        <th scope="col">ΕΤΟΣ</th>
+      </tr>
+    </thead>
+    <tbody >
+      {% for pilot in flight_hours%}
+        <tr>
+          <td><a href={% url 'profile' pilot.airman.asma %}><i class="fa-solid fa-user"></i></a></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_asma" name="{{ pilot.airman.asma }}" value={{pilot.airman.asma}} disabled></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_lastname" name="{{ pilot.airman.lastname }}" value={{pilot.airman.lastname}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_name" name="{{ pilot.airman.firstname }}" value={{pilot.airman.firstname}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_rank" name="{{ pilot.airman.rank }}" value={{pilot.airman.rank}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_spec" name="{{ pilot.airman.eidikotita }}" value={{pilot.airman.eidikotita}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_plane" name="{{ pilot.plane }}" value={{pilot.plane}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_capthours" name="{{ pilot.capthours }}" value={{pilot.capthours}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_cocapthours" name="{{ pilot.cocapthours }}" value={{pilot.cocapthours}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_ifrhours" name="{{ pilot.ifrhours }}" value={{pilot.ifrhours}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_nighthours" name="{{ pilot.nighthours }}" value={{pilot.nighthours}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_nauthours" name="{{ pilot.nauthours }}" value={{pilot.nauthours}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_crewhours" name="{{ pilot.crewhours }}" value={{pilot.crewhours}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_category" name="{{ pilot.category }}" value={{pilot.category}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_unit" name="{{ pilot.unit }}" value={{pilot.unit}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_month" name="{{ pilot.month }}" value={{pilot.month}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_year" name="{{ pilot.year }}" value={{pilot.year}}></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock content%}

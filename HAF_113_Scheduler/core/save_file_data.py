@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from .models import *
 import logging
 import copy
@@ -5,8 +6,10 @@ import copy
 def save_data(data,month=None,year=None):
     if month == None or year == None:
         for_flightgours(data)
+        return redirect("/hours/flight-hours/")
     else:
         for_trainhours(data,month,year)
+        return redirect("/hours/train-hours/")
     return True
 
 def replace(str1):
