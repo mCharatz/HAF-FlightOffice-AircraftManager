@@ -4,7 +4,44 @@
 {% block content%}
 <h3> {{pilot}} </h3>
 <hr>
+<h4 style="text-align:center"> Πληροφορίες </h4>
+<div class="tableFixHeadTiny">
+  <table class="table table-hover table-bordered">
+    <thead class="table-dark" style="position: sticky;top: 0">
+      <tr>
+        <th scope="col">ΑΜΑ</th>
+        <th scope="col">ΕΠΩΝΥΜΟ</th>
+        <th scope="col">ΟΝΟΜΑ</th>
+        <th scope="col">ΒΑΘΜΟΣ</th>
+        <th scope="col">ΕΙΔΙΚ</th>
+        <th scope="col">ΙΔΙΟΤΗΤΑ</th>
+        <th scope="col">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</th>
+        <th scope="col">ΤΟΠΟΘΕΤΗΣΗ</th>
+        <th scope="col">ΚΑΤΗΓΟΡΙΑ ΠΤΗΤΙΚΟΥ</th>
+        <th scope="col">ΜΟΝΑΔΑ ΕΚΔΟΣΗΣ ΠΤΗΤΙΚΟΥ</th>
+        <th scope="col">ΓΕΝΙΚΟ ΣΥΝΟΛΟ ΩΡΩΝ</th>
+      </tr>
+    </thead>
+    <tbody >
+        <tr>
+          <td><input type="text" id="asma" name="asma" value={{pilot.asma}} disabled></td>
+          <td><input type="text" id="lastname" name="lastname" value={{pilot.lastname}}></td>
+          <td><input type="text" id="name" name="name" value={{pilot.firstname}}></td>
+          <td><input type="text" id="rank" name="rank" value={{pilot.rank}}></td>
+          <td><input type="text" id="eidikotita" name="eidikotita" value={{pilot.eidikotita}}></td>
+          <td><input type="text" id="idiotita" name="idiotita" value={{pilot.idiotita}}></td>
+          <td><input type="text" id="diathesimotita" name="diathesimotita" value={{pilot.availability}}></td>
+          <td><input type="text" id="topothetisi" name="topothetisi" value={{pilot.topothetisi}}></td>
+          <td><input type="text" id="katigoria_ptitikou" name="katigoria_ptitikou" value={{pilot.katigoria_ptitikou}}></td>
+          <td><input type="text" id="monada_ekdosis_ptitikou" name="monada_ekdosis_ptitikou" value={{pilot.monada_ekdosis_ptitikou}}></td>
+          <td><input type="text" id="geniko_synolo_oron" name="geniko_synolo_oron" value={{pilot.geniko_synolo_oron}}></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
 <h4 style="text-align:center"> Ώρες Εκπαιδευτών </h4>
+{% if train_hours %}
 <div class="tableFixHeadSmall">
   <table class="table table-hover table-bordered">
     <thead class="table-dark" style="position: sticky;top: 0">
@@ -35,8 +72,14 @@
     </tbody>
   </table>
 </div>
+{% else %}
+<div class="alert alert-secondary" role="alert">
+  Δεν υπάρχουν ώρες εκπαιδευτών.
+</div>
+{% endif %}
 <hr>
 <h4 style="text-align:center"> Ώρες Πτήσεων </h4>
+{% if flight_hours %}
 <div class="tableFixHeadSmall">
   <table class="table table-hover table-bordered">
     <thead class="table-dark" style="position: sticky;top: 0">
@@ -85,4 +128,9 @@
     </tbody>
   </table>
 </div>
+{% else %}
+<div class="alert alert-secondary" role="alert">
+  Δεν υπάρχουν ώρες πτήσεων.
+</div>
+{% endif %}
 {% endblock content%}
