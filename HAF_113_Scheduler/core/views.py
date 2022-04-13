@@ -9,6 +9,10 @@ from .save_file_data import *
 from .models import *
 # Create your views here.
 
+
+def index(request):
+    return render(request,'core/index.html')
+
 def upload(request):
     return render(request,'core/upload_file.html')
 

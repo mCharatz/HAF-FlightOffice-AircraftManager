@@ -2,7 +2,12 @@
 {%load static%}
 
 {% block content %}
+<div class="btn-group" style="float:right;" role="group" aria-label="Basic example">
+  <a href={% url 'upload_file' %} class="button btn btn-primary">Έκδοση βεβαίωσης πτητικού</a>
+  <button type="submit" class="btn btn-primary">Συγκεντρώτικά προς ΓΕΑ</button>
+</div>
 <h3>Ώρες Πτήσεων</h3>
+
 <div class="tableFixHead">
     <table class="table table-hover table-bordered">
       <thead class="table-dark" style="position: sticky;top: 0">

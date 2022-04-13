@@ -38,7 +38,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href={% url 'upload_file' %}> <img src="{% static '/images/113-logo.png' %}"  width="7%" height="7%"> 
+        <a class="navbar-brand" href={% url 'index' %}> <img src="{% static '/images/113-logo.png' %}"  width="7%" height="7%"> 
         Γραφείο Πτήσεων</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -46,15 +46,26 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
         {% block selected_tab%}
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-            <a class="nav-link" aria-current="page" href={% url 'upload_file' %}>Προσθήκη αρχείου</a>
-            </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Αρχείο ωρών</a>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href={% url 'upload_file' %}>Μηνιαίες καταστάσεις ωρών προς ΓΕΑ</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Βεβαιώσεις</a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><a class="dropdown-item" href={% url 'flight_hours' %}>Ώρες Πτήσεων</a></li>
-                <li><a class="dropdown-item" href={% url 'train_hours' %}>Ώρες Εκπαιδευτών</a></li>
+                <li><a class="dropdown-item" aria-current="page" href={% url 'upload_file' %}>Προσωπικό 6ΜΗΝΟΥ</a></li>
+                <li><a class="dropdown-item" href={% url 'flight_hours' %}>Προσωπικό 18ΜΗΝΟΥ</a></li>
+                <li><a class="dropdown-item" href={% url 'train_hours' %}>Εκπαιδευτικά</a></li>
+                <li><a class="dropdown-item" href={% url 'train_hours' %}>Προς ΥΠΑ</a></li>
               </ul>
+          </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Εισαγωγή δεδομένων</a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" aria-current="page" href={% url 'upload_file' %}>Προσθήκη αρχείου</a></li>
+                  <li><a class="dropdown-item" href={% url 'flight_hours' %}>Ώρες πτήσεων</a></li>
+                  <li><a class="dropdown-item" href={% url 'train_hours' %}>Ώρες εκπαιδευτών</a></li>
+                </ul>
             </li>
         </ul>
         {%endblock selected_tab%}
@@ -70,10 +81,12 @@
     </div>
     </nav>
     <main class="container-fluid">
+      {% block indexpage%}
         <div class="bg-light p-5 rounded">
-            {% block content %}
+      {% block content %}
 			{% endblock %}
         </div>
+      {% endblock%}
     </main>
 
     <script src="{% static '/js/bootstrap.bundle.min.js' %}"></script>
@@ -82,7 +95,7 @@
 
   <footer class="footer fixed-bottom mt-auto py-1 bg-secondary">
     <div class="container text-center">
-      <span class="text-white "><img src="{% static '/images/haf-logo.svg' %}"  width="2%" height="2%"> <b>Πολεμική Αεροπορία · 113 Πτέρυγα Μάχης · Γραφείο Πτήσεων</b></span>
+      <span class="text-white "><img src="{% static '/images/haf-logo.svg' %}"  width="2%" height="2%"> <b>Πολεμική Αεροπορία · 113 Πτέρυγα Μάχης · MEY · Γραφείο Πτήσεων</b></span>
     </div>
   </footer>
 </body>

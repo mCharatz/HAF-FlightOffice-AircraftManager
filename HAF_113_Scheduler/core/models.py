@@ -23,6 +23,12 @@ class Airman(models.Model):
     def __str__(self):
         return (str(self.asma) + " - " + self.lastname + " " + self.firstname)
 
+#create an AirmanTrainer when hours of trainer are added
+class AirmanTrainer(models.Model):
+    airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
+    ptixio = models.CharField(max_length=200,default="",blank=True,null=True) # a b g
+    diatagi_orismou = models.CharField(max_length=200,default="",blank=True,null=True)
+
 class FlightHours(models.Model):
     airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
     plane = models.CharField(max_length=200,default="",blank=True,null=True)
