@@ -1,0 +1,117 @@
+{% extends 'core/core.html' %}
+{%load static%}
+{% block content %}
+<div class="container">
+    <h3> Εισαγωγή ώρας πτήσης </h3>
+    <hr>
+    <div class="row">
+    <form id="fileUpload" method="post" action="{% url 'proccess_data' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h4> Πληροφορίες </h4>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΑΜΑ *</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε το ΑΜΑ..." aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΕΠΩΝΥΜΟ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε το επώνυμο..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΟΝΟΜΑ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε το όνομα..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΒΑΘΜΟΣ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τον βαθμό..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΕΙΔΙΚΟΤΗΤΑ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε την ειδικότητα..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <h4>Πληροφορίες πτήσης</h4>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΑΦΟΣ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε το αφος..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΚΥΒ/ΤΗΣ (ΩΡΕΣ)</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες κυβ\της..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΣΥΓΚ/ΤΗΣ (ΩΡΕΣ)</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες συγκ\της..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">IFR (ΩΡΕΣ)</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες ifr..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΝΥΧΤΑ (ΩΡΕΣ)</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες νύχτας..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΝΑΥΤΙΛΙΑ (ΩΡΕΣ)</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες ναυτιλίας..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΠΛΗΡΩΜΑ (ΩΡΕΣ)</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες πληρώματος..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΚΑΤΗΓΟΡΙΑ (6ΜΗΝΟ/18ΜΗΝΟ)</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε την κατηγορία..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΜΟΝΑΔΑ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε την μονάδα..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΜΗΝΑΣ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε τον μήνα..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΕΤΟΣ</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Προσθέστε το έτος..." aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-block btn-success">Εισαγωγή</button>
+    </form>
+</div>
+<br>
+</div>
+
+{% endblock content %}}
+
+

@@ -5,6 +5,7 @@ urlpatterns = [
     path('',views.index,name="index"),
     path('add/uploadFile/',views.upload,name="upload_file"),
     path('add/uploadFile/success',views.upload_file_success,name="upload_file_success"),
+    path('add/flightHour/',views.add_flight_hour,name="add_flight_hour"),
     path('upload/',views.proccess_uploaded_data,name="proccess_data"),
     path('save/',views.save_uploaded_data,name="save_uploaded_data"),
     path('staff/6-months/',views.prosopiko_eksaminou,name="prosopiko_eksaminou"),

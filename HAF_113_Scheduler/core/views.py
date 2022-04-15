@@ -100,6 +100,12 @@ def pilots(request):
     context = {'table_data':pilots}
     return render(request,'core/vevaioseis/ypa.html',context)
 
+def add_flight_hour(request):
+    if request.method == "POST":
+        return render(request,'core/eisagogi_dedomenon/add_flight_hour.html')
+    else:
+        return render(request,'core/eisagogi_dedomenon/add_flight_hour.html')
+
 def train_hours(request):
     context = {}
     table_data = TrainHours.objects.all().order_by('airman__lastname')
