@@ -14,7 +14,10 @@ def index(request):
     return render(request,'core/index.html')
 
 def upload(request):
-    return render(request,'core/upload_file.html')
+    return render(request,'core/eisagogi_dedomenon/upload_file.html')
+
+def upload_file_success(request):
+    return render(request,'core/eisagogi_dedomenon/upload_file_success.html')
 
 def proccess_uploaded_data(request):
     if request.method == "POST":
@@ -76,6 +79,26 @@ def flight_hours(request):
     table_data = FlightHours.objects.all().order_by('airman__lastname')
     context = {'table_data':table_data}
     return render(request,'core/flight_hours_page.html',context)
+
+def prosopiko_eksaminou(request):
+    eksaminoi = Airman.objects.filter(flighthours__category="6ΜΗΝΟ").order_by('lastname')
+    context = {'table_data':eksaminoi}
+    return render(request,'core/vevaioseis/six_months.html',context)
+
+def prosopiko_dekaotaminou(request):
+    dekaoktaminoi = Airman.objects.filter(flighthours__category="18ΜΗΝΟ").order_by('lastname')
+    context = {'table_data':dekaoktaminoi}
+    return render(request,'core/vevaioseis/eighteen_months.html',context)
+
+def trainers(request):
+    trainers = AirmanTrainer.objects.all()
+    context = {'table_data':trainers}
+    return render(request,'core/vevaioseis/trainers.html',context)
+
+def pilots(request):
+    pilots = Airman.objects.filter(eidikotita="Ι")
+    context = {'table_data':pilots}
+    return render(request,'core/vevaioseis/ypa.html',context)
 
 def train_hours(request):
     context = {}

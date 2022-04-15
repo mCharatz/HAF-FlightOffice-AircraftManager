@@ -6,10 +6,10 @@ import copy
 def save_data(data,month=None,year=None):
     if month == None or year == None:
         for_flightgours(data)
-        return redirect("/hours/flight-hours/")
+        return redirect("/add/uploadFile/success")
     else:
         for_trainhours(data,month,year)
-        return redirect("/hours/train-hours/")
+        return redirect("/add/uploadFile/success")
     return True
 
 def replace(str1):
@@ -91,6 +91,12 @@ def for_trainhours(trainhours,month,year):
                 asma = trainhour[1][2],
                 lastname = trainhour[1][1],
                 rank = trainhour[1][0]
+            )
+        try:
+            airman_trainer = AirmanTrainer.objects.get(asma=airman_item)
+        except:
+            airman_trainer = AirmanTrainer.objects.create(
+                airman = airman_item
             )
         try:
             flight_hour_item = TrainHours.objects.get(

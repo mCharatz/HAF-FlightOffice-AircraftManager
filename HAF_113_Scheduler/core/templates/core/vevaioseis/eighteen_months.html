@@ -1,0 +1,48 @@
+{% extends 'core/core.html' %}
+{%load static%}
+
+{% block content %}
+<h3>Προσωπικό 18ΜΗΝΟΥ</h3>
+
+<div class="tableFixHead">
+  <table class="table table-hover table-bordered">
+    <thead class="table-dark" style="position: sticky;top: 0">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">ΠΡΟΦΙΛ</th>
+        <th scope="col">ΑΜΑ</th>
+        <th scope="col">ΕΠΩΝΥΜΟ</th>
+        <th scope="col">ΟΝΟΜΑ</th>
+        <th scope="col">ΒΑΘΜΟΣ</th>
+        <th scope="col">ΕΙΔΙΚ</th>
+        <th scope="col">ΙΔΙΟΤΗΤΑ</th>
+        <th scope="col">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</th>
+        <th scope="col">ΤΟΠΟΘΕΤΗΣΗ</th>
+        <th scope="col">ΚΑΤΗΓΟΡΙΑ ΠΤΗΤΙΚΟΥ</th>
+        <th scope="col">ΜΟΝΑΔΑ ΕΚΔΟΣΗΣ ΠΤΗΤΙΚΟΥ</th>
+        <th scope="col">ΓΕΝΙΚΟ ΣΥΝΟΛΟ ΩΡΩΝ</th>
+      </tr>
+    </thead>
+    <tbody >
+      {% for pilot in table_data%}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td><a href={% url 'profile' pilot.asma %}><i class="fa-solid fa-user"></i></a></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_asma" name="{{ pilot.airman.asma }}_asma" value={{pilot.asma}} disabled></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_lastname" name="{{ pilot.airman.asma }}_lastname" value={{pilot.lastname}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_name" name="{{ pilot.airman.asma }}_name" value={{pilot.firstname}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_rank" name="{{ pilot.airman.asma }}_rank" value={{pilot.rank}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_eidikotita" name="{{ pilot.airman.asma }}_eidikotita" value={{pilot.eidikotita}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_idiotita" name="{{ pilot.airman.asma }}_idiotita" value={{pilot.idiotita}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_diathesimotita" name="{{ pilot.airman.asma }}_diathesimotita" value={{pilot.availability}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_topothetisi" name="{{ pilot.airman.asma }}_topothetisi" value={{pilot.topothetisi}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_katigoria_ptitikou" name="{{ pilot.airman.asma }}_katigoria_ptitikou" value={{pilot.katigoria_ptitikou}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_monada_ekdosis_ptitikou" name="{{ pilot.airman.asma }}_monada_ekdosis_ptitikou" value={{pilot.monada_ekdosis_ptitikou}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_geniko_synolo_oron" name="{{ pilot.airman.asma }}_geniko_synolo_oron" value={{pilot.geniko_synolo_oron}}></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content%}

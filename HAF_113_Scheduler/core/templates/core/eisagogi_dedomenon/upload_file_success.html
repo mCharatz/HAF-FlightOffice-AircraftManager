@@ -1,0 +1,23 @@
+{% extends 'core/core.html' %}
+{%load static%}
+{% block content %}
+<div class="row">
+<div class="col-sm">
+    <h3> Προσθέστε ένα αρχείο </h3>
+    <form id="fileUpload" method="post" action="{% url 'proccess_data' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="form-control form-control-lg" id="file" name="files" type="file" accept="application/pdf" required>
+        <br>
+        <button type="submit" class="btn btn-success">Προσθήκη</button>
+    </form>
+</div>
+<br>
+
+</div>
+<br>
+<div class="alert alert-success" role="alert">
+    Το αρχείο προστέθηκε.
+</div>
+{% endblock content %}}
+
+

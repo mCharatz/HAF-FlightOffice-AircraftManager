@@ -52,10 +52,10 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Βεβαιώσεις</a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><a class="dropdown-item" aria-current="page" href={% url 'upload_file' %}>Προσωπικό 6ΜΗΝΟΥ</a></li>
-                <li><a class="dropdown-item" href={% url 'flight_hours' %}>Προσωπικό 18ΜΗΝΟΥ</a></li>
-                <li><a class="dropdown-item" href={% url 'train_hours' %}>Εκπαιδευτικά</a></li>
-                <li><a class="dropdown-item" href={% url 'train_hours' %}>Προς ΥΠΑ</a></li>
+                <li><a class="dropdown-item" aria-current="page" href={% url 'prosopiko_eksaminou' %}>Προσωπικό 6ΜΗΝΟΥ</a></li>
+                <li><a class="dropdown-item" href={% url 'prosopiko_dekaotaminou' %}>Προσωπικό 18ΜΗΝΟΥ</a></li>
+                <li><a class="dropdown-item" href={% url 'trainers' %}>Εκπαιδευτικά</a></li>
+                <li><a class="dropdown-item" href={% url 'pilots' %}>Προς ΥΠΑ</a></li>
               </ul>
           </li>
 
@@ -63,8 +63,8 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Εισαγωγή δεδομένων</a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><a class="dropdown-item" aria-current="page" href={% url 'upload_file' %}>Προσθήκη αρχείου</a></li>
-                  <li><a class="dropdown-item" href={% url 'flight_hours' %}>Ώρες πτήσεων</a></li>
-                  <li><a class="dropdown-item" href={% url 'train_hours' %}>Ώρες εκπαιδευτών</a></li>
+                  <li><a class="dropdown-item" href={% url 'flight_hours' %}>Εισαγωγή ωρών πτήσεων</a></li>
+                  <li><a class="dropdown-item" href={% url 'train_hours' %}>Εισαγωγή ωρών εκπαιδευτών</a></li>
                 </ul>
             </li>
         </ul>
@@ -92,11 +92,7 @@
     <script src="{% static '/js/bootstrap.bundle.min.js' %}"></script>
     {%block scripts%}
     {%endblock%}  
-
-  <footer class="footer fixed-bottom mt-auto py-1 bg-secondary">
-    <div class="container text-center">
-      <span class="text-white "><img src="{% static '/images/haf-logo.svg' %}"  width="2%" height="2%"> <b>Πολεμική Αεροπορία · 113 Πτέρυγα Μάχης · MEY · Γραφείο Πτήσεων</b></span>
-    </div>
-  </footer>
+    {% block footer%}
+    {% endblock footer%}
 </body>
 </html>
