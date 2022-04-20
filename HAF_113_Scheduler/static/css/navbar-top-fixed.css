@@ -4,7 +4,7 @@ body {
 }
 
 .tableFixHead          { overflow: auto; height: 75vh; }
-.tableFixHeadSmall         { overflow: auto; height: 30vh; }
+.tableFixHeadSmall         { overflow: auto; height: 40vh; }
 .tableFixHeadTiny         { overflow: auto; height: 20vh; }
 
 .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
