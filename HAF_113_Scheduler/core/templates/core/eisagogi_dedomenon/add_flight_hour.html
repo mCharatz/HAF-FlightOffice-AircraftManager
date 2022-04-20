@@ -2,108 +2,139 @@
 {%load static%}
 {% block content %}
 <div class="container">
+    {% if success_message %}
+      <div class="alert alert-success" role="alert">
+        {{success_message}}
+      </div>
+    {%endif%}
+    {% if exist_message %}
+    <div class="alert alert-danger" role="alert">
+      {{exist_message}}
+    </div>
+  {%endif%}
+    
     <h3> Εισαγωγή ώρας πτήσης </h3>
     <hr>
     <div class="row">
-    <form id="fileUpload" method="post" action="{% url 'proccess_data' %}" enctype="multipart/form-data">
+    <form id="findAsma" method="post" action="{% url 'add_flight_hour' %}" findasma-url="{% url 'findasma' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <h4> Πληροφορίες </h4>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΑΜΑ *</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε το ΑΜΑ..." aria-label="Username" aria-describedby="basic-addon1" required>
+            <input type="number" class="form-control" placeholder="Προσθέστε το ΑΜΑ..." aria-label="Username" id="asma" name="asma" required>
         </div>
-        <div class="col-sm input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">ΕΠΩΝΥΜΟ</span>
+        <div id="airmandetails">
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΕΠΩΝΥΜΟ</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Προσθέστε το επώνυμο..." aria-label="Username" id="lastname" name="lastname" required>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε το επώνυμο..." aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="col-sm input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">ΟΝΟΜΑ</span>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΟΝΟΜΑ</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Προσθέστε το όνομα..." aria-label="Username" id="firstname" name="firstname" required>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε το όνομα..." aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="col-sm input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">ΒΑΘΜΟΣ</span>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΒΑΘΜΟΣ</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Προσθέστε τον βαθμό..." aria-label="Username" id="rank" name="rank" required>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τον βαθμό..." aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="col-sm input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">ΕΙΔΙΚΟΤΗΤΑ</span>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΕΙΔΙΚΟΤΗΤΑ</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Προσθέστε την ειδικότητα..." aria-label="Username" id="speciality" name="speciality" required>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε την ειδικότητα..." aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <h4>Πληροφορίες πτήσης</h4>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΑΦΟΣ</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε το αφος..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="Προσθέστε το αφος..." aria-label="Username" id="plane" name="plane" required>
         </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΚΥΒ/ΤΗΣ (ΩΡΕΣ)</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες κυβ\της..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" placeholder="Προσθέστε τις ώρες κυβ\της..." aria-label="Username" id="capthours" name="capthours" required>
         </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΣΥΓΚ/ΤΗΣ (ΩΡΕΣ)</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες συγκ\της..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" placeholder="Προσθέστε τις ώρες συγκ\της..." aria-label="Username" id="cocapthours" name="cocapthours" required>
         </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">IFR (ΩΡΕΣ)</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες ifr..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" placeholder="Προσθέστε τις ώρες ifr..." aria-label="Username" id="ifrhours" name="ifrhours" required>
         </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΝΥΧΤΑ (ΩΡΕΣ)</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες νύχτας..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" placeholder="Προσθέστε τις ώρες νύχτας..." aria-label="Username" id="nighthours" name="nighthours" required>
         </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΝΑΥΤΙΛΙΑ (ΩΡΕΣ)</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες ναυτιλίας..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" placeholder="Προσθέστε τις ώρες ναυτιλίας..." aria-label="Username" id="nauthours" name="nauthours" required>
         </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΠΛΗΡΩΜΑ (ΩΡΕΣ)</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τις ώρες πληρώματος..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" placeholder="Προσθέστε τις ώρες πληρώματος..." aria-label="Username"id="crewhours" name="crewhours" required>
         </div>
         <div class="col-sm input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">ΚΑΤΗΓΟΡΙΑ (6ΜΗΝΟ/18ΜΗΝΟ)</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε την κατηγορία..." aria-label="Username" aria-describedby="basic-addon1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">ΚΑΤΗΓΟΡΙΑ (6ΜΗΝΟ/18ΜΗΝΟ) *</span>
+          </div>
+          <select class="form-select" name="category" id="category" required>
+            <option value="">Επιλέξτε κατηγορία...</option>
+            <option value="6ΜΗΝΟ">6ΜΗΝΟ</option>
+            <option value="18ΜΗΝΟ">18ΜΗΝΟ</option>
+          </select>
         </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">ΜΟΝΑΔΑ</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε την μονάδα..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="Προσθέστε την μονάδα..." aria-label="Username" id="unit" name="unit">
         </div>
         <div class="col-sm input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">ΜΗΝΑΣ</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε τον μήνα..." aria-label="Username" aria-describedby="basic-addon1">
-        </div>
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">ΜΗΝΑΣ *</span>
+          </div>
+          <select class="form-select" name="month" id="month" required>
+            <option value="">Επιλέξτε μήνα...</option>
+            <option value="ΙΑΝΟΥΑΡΙΟΣ">ΙΑΝΟΥΑΡΙΟΣ</option>
+            <option value="ΦΕΒΡΟΥΑΡΙΟΣ">ΦΕΒΡΟΥΑΡΙΟΣ</option>
+            <option value="ΜΑΡΤΙΟΣ">ΜΑΡΤΙΟΣ</option>
+            <option value="ΑΠΡΙΛΙΟΣ">ΑΠΡΙΛΙΟΣ</option>
+            <option value="ΜΑΙΟΣ">ΜΑΙΟΣ</option>
+            <option value="ΙΟΥΝΙΟΣ">ΙΟΥΝΙΟΣ</option>
+            <option value="ΙΟΥΛΙΟΣ">ΙΟΥΛΙΟΣ</option>
+            <option value="ΑΥΓΟΥΣΤΟΣ">ΑΥΓΟΥΣΤΟΣ</option>
+            <option value="ΣΕΠΤΕΜΒΡΙΟΣ">ΣΕΠΤΕΜΒΡΙΟΣ</option>
+            <option value="ΟΚΤΩΒΡΙΟΣ">ΟΚΤΩΒΡΙΟΣ</option>
+            <option value="ΝΟΕΜΒΡΙΟΣ">ΝΟΕΜΒΡΙΟΣ</option>
+            <option value="ΔΕΚΕΜΒΡΙΟΣ">ΔΕΚΕΜΒΡΙΟΣ</option>
+          </select>
+      </div>
         <div class="col-sm input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">ΕΤΟΣ</span>
+              <span class="input-group-text" id="basic-addon1">ΕΤΟΣ *</span>
             </div>
-            <input type="text" class="form-control" placeholder="Προσθέστε το έτος..." aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" placeholder="Προσθέστε το έτος..." aria-label="Username" id="year" name="year" required>
         </div>
         <hr>
         <button type="submit" class="btn btn-block btn-success">Εισαγωγή</button>
@@ -112,6 +143,32 @@
 <br>
 </div>
 
-{% endblock content %}}
+{% endblock content %}
+{% block scripts%}
+<script>
+	$("#asma").change(function () {
+	    var url = $("#findAsma").attr("findasma-url"); 
+	    var asma = $(this).val();  
+	    
+	    $.ajax({                  
+	        url: url,                   
+	        data: {
+	            'asma': asma
+	        },
+	        success: function (data) {
+              if (data.found == true){
+                document.getElementById("asma").value = data.asma;
+                document.getElementById("firstname").value = data.firstname;
+                document.getElementById("lastname").value = data.lastname;
+                document.getElementById("rank").value = data.rank;
+                document.getElementById("speciality").value = data.speciality;
+              }
+	                
+	        }
+	  });
+	
+	});
+</script>
+{% endblock scripts%}
 
 

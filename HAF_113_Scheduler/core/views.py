@@ -1,7 +1,10 @@
 from calendar import month
 import imp
+from warnings import catch_warnings
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse , HttpResponseRedirect
+from django.urls import reverse
+from django.http import JsonResponse
 from .forms import UploadFileForm
 from .process_file_data import *
 from .save_file_data import save_data
@@ -81,12 +84,12 @@ def flight_hours(request):
     return render(request,'core/flight_hours_page.html',context)
 
 def prosopiko_eksaminou(request):
-    eksaminoi = Airman.objects.filter(flighthours__category="6ΜΗΝΟ").order_by('lastname')
+    eksaminoi = Airman.objects.filter(flighthours__category="6ΜΗΝΟ").order_by('lastname').distinct()
     context = {'table_data':eksaminoi}
     return render(request,'core/vevaioseis/six_months.html',context)
 
 def prosopiko_dekaotaminou(request):
-    dekaoktaminoi = Airman.objects.filter(flighthours__category="18ΜΗΝΟ").order_by('lastname')
+    dekaoktaminoi = Airman.objects.filter(flighthours__category="18ΜΗΝΟ").order_by('lastname').distinct()
     context = {'table_data':dekaoktaminoi}
     return render(request,'core/vevaioseis/eighteen_months.html',context)
 
@@ -96,16 +99,104 @@ def trainers(request):
     return render(request,'core/vevaioseis/trainers.html',context)
 
 def pilots(request):
-    pilots = Airman.objects.filter(eidikotita="Ι")
+    pilots = Airman.objects.filter(eidikotita="Ι").distinct()
     context = {'table_data':pilots}
     return render(request,'core/vevaioseis/ypa.html',context)
 
+
+def add_flight_hour_suceess(request):
+    context = {
+        'success_message': 'Η ώρα πτήσης προστέθηκε.'
+    }
+    return render(request,'core/eisagogi_dedomenon/add_flight_hour.html',context)
+    
+def add_flight_hour_exist(request):
+    context = {
+        'exist_message': 'Η ώρα πτήσης για τον ιπτάμενο για τον συγκεκριμένο μήνα και χρόνο υπάρχει ήδη.'
+    }
+    return render(request,'core/eisagogi_dedomenon/add_flight_hour.html',context)
+
 def add_flight_hour(request):
     if request.method == "POST":
-        return render(request,'core/eisagogi_dedomenon/add_flight_hour.html')
+        asma = request.POST.get('asma', None)
+        lastname = request.POST.get('lastname', None)
+        firstname = request.POST.get('firstname', None)
+        rank = request.POST.get('rank', None)
+        speciality = request.POST.get('speciality', None)
+        plane = request.POST.get('plane', None)
+        capthours = request.POST.get('capthours', 0)
+        cocapthours = request.POST.get('cocapthours', 0)
+        ifrhours = request.POST.get('ifrhours', 0)
+        nighthours = request.POST.get('nighthours', 0)
+        nauthours = request.POST.get('nauthours', 0)
+        crewhours = request.POST.get('crewhours', 0)
+        category = request.POST.get('category', None)
+        unit = request.POST.get('unit', None)
+        month = request.POST.get('month', None)
+        year = request.POST.get('year', None)
+        if asma == None:
+            return redirect("/add/flightHour/")
+        try:
+            airman = Airman.objects.get(asma=asma)
+        except:
+            airman = Airman.objects.create(
+                airman_item = Airman.objects.create(
+                    asma = asma,
+                    lastname = lastname,
+                    firstname = firstname,
+                    rank = rank,
+                    eidikotita = speciality
+                )
+            )
+        try:
+            flighthour = FlightHours.objects.get(
+                airman = airman,
+                month = month,
+                year = year
+            )
+            return HttpResponseRedirect(reverse('add_flight_hour_exist'))
+        except:
+            flighthour = FlightHours.objects.create(
+                airman = airman,
+                plane = plane,
+                capthours = capthours,
+                cocapthours = cocapthours,
+                ifrhours = ifrhours,
+                nighthours = nighthours,
+                nauthours = nauthours,
+                crewhours = crewhours,
+                category = category,
+                unit = unit,
+                month = month,
+                year = year
+            )
+        return HttpResponseRedirect(reverse('add_flight_hour_suceess'))
     else:
         return render(request,'core/eisagogi_dedomenon/add_flight_hour.html')
 
+
+
+def findasma(request):
+    asma = request.GET.get('asma', None)
+    try:
+        airman = Airman.objects.get(asma=asma)
+    except:
+        airman = None
+    
+    if airman != None:
+        response = {
+            'found': True,
+            'asma' : airman.asma,
+            'lastname' : airman.lastname,
+            'firstname' : airman.firstname,
+            'rank' : airman.rank,
+            'speciality' : airman.eidikotita
+        }
+    else:
+        response = {
+            'found': False
+        }
+    return JsonResponse(response)
 def train_hours(request):
     context = {}
     table_data = TrainHours.objects.all().order_by('airman__lastname')
