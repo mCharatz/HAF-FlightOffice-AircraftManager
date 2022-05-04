@@ -140,13 +140,11 @@ def add_flight_hour(request):
             airman = Airman.objects.get(asma=asma)
         except:
             airman = Airman.objects.create(
-                airman_item = Airman.objects.create(
-                    asma = asma,
-                    lastname = lastname,
-                    firstname = firstname,
-                    rank = rank,
-                    eidikotita = speciality
-                )
+                asma = asma,
+                lastname = lastname,
+                firstname = firstname,
+                rank = rank,
+                eidikotita = speciality
             )
         try:
             flighthour = FlightHours.objects.get(
@@ -174,6 +172,68 @@ def add_flight_hour(request):
     else:
         return render(request,'core/eisagogi_dedomenon/add_flight_hour.html')
 
+
+
+def add_train_hour_suceess(request):
+    context = {
+        'success_message': 'Η ώρα εκπαίδευσης προστέθηκε.'
+    }
+    return render(request,'core/eisagogi_dedomenon/eisagogi_ores_ekpaideutwn.html',context)
+    
+def add_train_hour_exist(request):
+    context = {
+        'exist_message': 'Η ώρα εκπαίδευσης για τον εκπαιδευτή για τον συγκεκριμένο μήνα, χρόνο και Α/Φ υπάρχει ήδη.'
+    }
+    return render(request,'core/eisagogi_dedomenon/eisagogi_ores_ekpaideutwn.html',context)
+
+def add_train_hour(request):
+    if request.method == "POST":
+        asma = request.POST.get('asma', None)
+        lastname = request.POST.get('lastname', None)
+        firstname = request.POST.get('firstname', None)
+        rank = request.POST.get('rank', None)
+        speciality = request.POST.get('speciality', None)
+        plane = request.POST.get('plane', None)
+        hours = request.POST.get('hours', 0)
+        month = request.POST.get('month', None)
+        year = request.POST.get('year', None)
+        if asma == None:
+            return redirect("/add/trainHour/")
+        try:
+            airman = Airman.objects.get(asma=asma)
+        except:
+            airman = Airman.objects.create(
+                asma = asma,
+                lastname = lastname,
+                firstname = firstname,
+                rank = rank,
+                eidikotita = speciality
+            )
+        try:
+            trainer = AirmanTrainer.objects.get(asma=asma)
+        except:
+            trainer = AirmanTrainer.objects.create(
+                airman = airman
+            )
+        try:
+            trainhour = TrainHours.objects.get(
+                airman = airman,
+                plane=plane,
+                month = month,
+                year = year
+            )
+            return HttpResponseRedirect(reverse('add_train_hour_exist'))
+        except:
+            trainhour = TrainHours.objects.create(
+                airman = airman,
+                plane = plane,
+                hours = hours,
+                month = month,
+                year = year
+            )
+        return HttpResponseRedirect(reverse('add_train_hour_suceess'))
+    else:
+        return render(request,'core/eisagogi_dedomenon/eisagogi_ores_ekpaideutwn.html')
 
 
 def findasma(request):
