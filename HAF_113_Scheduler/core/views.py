@@ -103,6 +103,9 @@ def pilots(request):
     context = {'table_data':pilots}
     return render(request,'core/vevaioseis/ypa.html',context)
 
+def vevaioseis(request):
+    context = {}
+    return render(request,'core/vevaioseis/filter.html',context)
 
 def add_flight_hour_suceess(request):
     context = {

@@ -17,7 +17,8 @@ class Airman(models.Model):
     idiotita = models.CharField(max_length=200,default="",blank=True,null=True)
     availability = models.CharField(max_length=200,default="",blank=True,null=True)
     topothetisi = models.CharField(max_length=200,default="",blank=True,null=True)
-    katigoria_ptitikou = models.CharField(max_length=200,default="",blank=True,null=True)
+    katigoria_dikaioumeni = models.CharField(max_length=200,default="",blank=True,null=True)
+    katigoria_katoxiromeni = models.CharField(max_length=200,default="",blank=True,null=True)
     monada_ekdosis_ptitikou = models.CharField(max_length=200,default="",blank=True,null=True)
     geniko_synolo_oron = models.FloatField(blank=True,null=True,default=0)
     def __str__(self):
@@ -30,6 +31,7 @@ class AirmanTrainer(models.Model):
     diatagi_orismou = models.CharField(max_length=200,default="",blank=True,null=True)
     def __str__(self):
         return (str(self.airman.asma) + " - " + self.airman.lastname + " " + self.airman.firstname)
+        
 class FlightHours(models.Model):
     airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
     plane = models.CharField(max_length=200,default="",blank=True,null=True)
