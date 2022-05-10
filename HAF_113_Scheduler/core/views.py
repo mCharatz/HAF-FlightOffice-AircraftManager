@@ -327,3 +327,16 @@ def profile(request,asma):
         'train_hours':train_hours
     }
     return render(request,'core/airman_profile.html',context)
+
+def search(request):
+    if request.method == "POST":
+        asma = request.POST.get('asma', None)
+        if asma != None:
+            try:
+                airman = Airman.objects.get(asma=asma)
+            except:
+                return redirect("/")
+            url = "/profile/"+asma
+            return redirect(url)
+
+    return redirect("/")

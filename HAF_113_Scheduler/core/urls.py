@@ -21,6 +21,7 @@ urlpatterns = [
     path('hours/flight-hours/',views.flight_hours,name="flight_hours"),
     path('hours/train-hours/',views.train_hours,name="train_hours"),
     path('profile/<slug:asma>/',views.profile,name="profile"),
-    path('add/flightHour/find',views.findasma,name="findasma")
+    path('add/flightHour/find',views.findasma,name="findasma"),
+    path('search/',views.search,name="search")
     
 ]

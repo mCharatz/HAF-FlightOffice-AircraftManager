@@ -10,9 +10,47 @@
 </style>
 {% endblock%}
 {% block indexpage %}
-<div class="shadow-sm p-1 mb-1 bg-transparent rounded" style="margin-top:13rem;">
-<h1 class="display-1 mx-auto mt-5 p-3 text-center text-white"><i><b>"Θνήσκε Yπέρ Πατρίδος"</b></i></h1>
+<div class="col-lg-3 mx-auto p-1 mb-1 bg-transparent rounded text-white" style="margin-top:13rem;">
+
+  <div class="row">
+    <form id="findAsma" method="post" action="{% url 'search' %}" findasma-url="{% url 'findasma' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h4> Αναζήτηση </h4>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΑΜΑ *</span>
+            </div>
+            <input type="number" class="form-control" placeholder="Προσθέστε το ΑΜΑ..." aria-label="Username" id="asma" name="asma" required>
+        </div>
+        <div id="airmandetails">
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΕΠΩΝΥΜΟ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="lastname" name="lastname" required disabled>
+            </div>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΟΝΟΜΑ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="firstname" name="firstname" required disabled>
+            </div>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΒΑΘΜΟΣ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="rank" name="rank" required disabled>
+            </div>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΕΙΔΙΚΟΤΗΤΑ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="speciality" name="speciality" required disabled>
+            </div>
+            <button id="search" name="search" class="btn btn-success" disabled>Αναζήτηση</button>
+        </div>
 </div>
+<form>
 {% endblock %}
 
 {% block footer%}
@@ -22,3 +60,39 @@
   </div>
 </footer>
 {% endblock footer%}
+{% block scripts%}
+<script>
+	$("#asma").change(function () {
+	    var url = $("#findAsma").attr("findasma-url"); 
+	    var asma = $(this).val();  
+	    
+	    $.ajax({                  
+	        url: url,                   
+	        data: {
+	            'asma': asma
+	        },
+	        success: function (data) {
+              if (data.found == true){
+                document.getElementById("asma").value = data.asma;
+                document.getElementById("firstname").value = data.firstname;
+                document.getElementById("lastname").value = data.lastname;
+                document.getElementById("rank").value = data.rank;
+                document.getElementById("speciality").value = data.speciality;
+                const button = document.getElementById("search")
+                button.disabled = false
+              }
+              else{
+                document.getElementById("firstname").value = "";
+                document.getElementById("lastname").value = "";
+                document.getElementById("rank").value = "";
+                document.getElementById("speciality").value = "";
+                const button = document.getElementById("search")
+                button.disabled = true
+              }
+	                
+	        }
+	  });
+	
+	});
+</script>
+{% endblock scripts%}
