@@ -6,8 +6,8 @@
 <hr>
 <form method="post">
     {%csrf_token%}
-    <div class="row justify-content-around">
-        <div class="col-4">
+    <div class="row justify-content-center">
+        <div class="col-6">
             <h4>Από</h4>
             <div class="input-group">
                 <select class="form-select" id="from_month" name="from_month" required>
@@ -28,7 +28,10 @@
                 <input type="number" placeholder="Έτος..." class="form-control" id="from_year" name="from_year" required>
             </div>
         </div>
-        <div class="col-4">
+      </div>
+      <br>
+      <div class="row justify-content-center">
+        <div class="col-6">
             <h4>Εώς</h4>
             <div class="input-group">
                 <select class="form-select" id="to_month" name="to_month" required>
@@ -52,7 +55,7 @@
       </div>
       <br>
       <div class="row justify-content-center">
-      <div class="col-4">
+      <div class="col-6">
         <h4>Προσωπικό</h4>
         <div class="input-group">
             <select class="form-select" id="prosopiko" name="prosopiko" required>

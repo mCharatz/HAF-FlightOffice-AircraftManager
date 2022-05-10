@@ -22,7 +22,7 @@ class Airman(models.Model):
     monada_ekdosis_ptitikou = models.CharField(max_length=200,default="",blank=True,null=True)
     geniko_synolo_oron = models.FloatField(blank=True,null=True,default=0)
     def __str__(self):
-        return (str(self.asma) + " - " + self.lastname + " " + self.firstname)
+        return (str(self.asma) + " - " + str(self.lastname) + " " + str(self.firstname))
 
 #create an AirmanTrainer when hours of trainer are added
 class AirmanTrainer(models.Model):
@@ -30,7 +30,7 @@ class AirmanTrainer(models.Model):
     ptixio = models.CharField(max_length=200,default="",blank=True,null=True) # a b g
     diatagi_orismou = models.CharField(max_length=200,default="",blank=True,null=True)
     def __str__(self):
-        return (str(self.airman.asma) + " - " + self.airman.lastname + " " + self.airman.firstname)
+        return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " " + str(self.airman.firstname))
         
 class FlightHours(models.Model):
     airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
@@ -46,7 +46,7 @@ class FlightHours(models.Model):
     month = models.CharField(max_length=200,default="",blank=True,null=True)
     year = models.CharField(max_length=200,default="",blank=True,null=True)
     def __str__(self):
-        return (str(self.airman.asma) + " - " + self.airman.lastname + " - "+ self.month + " " + self.year)
+        return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " - "+ str(self.month) + " " + str(self.year))
 
 class TrainHours(models.Model):
     airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
@@ -55,7 +55,7 @@ class TrainHours(models.Model):
     month = models.CharField(max_length=200,default="",blank=True,null=True)
     year = models.CharField(max_length=200,default="",blank=True,null=True)
     def __str__(self):
-        return (str(self.airman.asma) + " - " + self.airman.lastname + " - "+ self.month + " " + self.year)
+        return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " - "+ str(self.month) + " " + str(self.year))
 
 
 @receiver(models.signals.post_delete, sender=UploadedFile)
