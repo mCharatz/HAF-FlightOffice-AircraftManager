@@ -1,5 +1,6 @@
 from calendar import month
 import imp
+from unicodedata import category
 from warnings import catch_warnings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse , HttpResponseRedirect
@@ -10,6 +11,7 @@ from .process_file_data import *
 from .save_file_data import save_data
 from .save_file_data import *
 from .models import *
+from .support_func import *
 # Create your views here.
 
 
@@ -49,18 +51,18 @@ def proccess_uploaded_data(request):
 def save_uploaded_data(request):
     #TODO FIX THIS IN ORDER TO SAVE DATA
     months = {
-        1: 'ΙΑΝΟΥΑΡΙΟΣ',
-        2: 'ΦΕΒΡΟΥΑΡΙΟΣ',
-        3: 'ΜΑΡΤΙΟΣ',
-        4: 'ΑΠΡΙΛΙΟΣ',
-        5: 'ΜΑΙΟΣ',
-        6: 'ΙΟΥΝΙΟΣ',
-        7: 'ΙΟΥΛΙΟΣ',
-        8: 'ΑΥΓΟΥΣΤΟΣ',
-        9: 'ΣΕΠΤΕΜΒΡΙΟΣ',
-        10: 'ΟΚΤΩΒΡΙΟΣ',
-        11: 'ΝΟΕΜΒΡΙΟΣ',
-        12: 'ΔΕΚΕΜΒΡΙΟΣ'
+       'ΙΑΝΟΥΑΡΙΟΣ':1,
+       'ΦΕΒΡΟΥΑΡΙΟΣ':2,
+        'ΜΑΡΤΙΟΣ':3,
+        'ΑΠΡΙΛΙΟΣ':4,
+        'ΜΑΙΟΣ':5,
+        'ΙΟΥΝΙΟΣ':6,
+        'ΙΟΥΛΙΟΣ':7,
+        'ΑΥΓΟΥΣΤΟΣ':8 ,
+        'ΣΕΠΤΕΜΒΡΙΟΣ':9,
+        'ΟΚΤΩΒΡΙΟΣ':10 ,
+        'ΝΟΕΜΒΡΙΟΣ':11 ,
+        'ΔΕΚΕΜΒΡΙΟΣ':12 
     }
     logger = logging.getLogger("mylogger")
     if request.method == "POST":
@@ -104,6 +106,51 @@ def pilots(request):
     return render(request,'core/vevaioseis/ypa.html',context)
 
 def vevaioseis(request):
+    if request.method == "POST":
+        from_month = request.POST.get('from_month', None)
+        from_year = request.POST.get('from_year', None)
+
+        to_month = request.POST.get('to_month', None)
+        to_year = request.POST.get('to_year', None)
+
+        prosopiko = request.POST.get('prosopiko', None)
+
+        if prosopiko == '6ΜΗΝΟ':
+            results = FlightHours.objects.filter(category='6ΜΗΝΟ')
+        elif prosopiko == '18ΜΗΝΟ':
+            results = FlightHours.objects.filter(category='18ΜΗΝΟ')
+        elif prosopiko == 'TRAIN':
+            results = TrainHours.objects.all()
+        else:
+            results = FlightHours.objects.filter(category='6ΜΗΝΟ')
+        
+        for hour in results:
+            if not is_between(from_month,from_year,to_month,to_year,hour.month,hour.year):
+                results = results.exclude(id=hour.id)
+
+        if prosopiko == 'YPA':
+            table_data = Airman.objects.filter(asma__in=results.values('airman'),eidikotita='Ι')
+        elif prosopiko == 'TRAIN':
+            table_data = AirmanTrainer.objects.filter(airman__asma__in=results.values('airman'))
+        else:
+            table_data = Airman.objects.filter(asma__in=results.values('airman'))
+        context = {
+            'table_data':table_data,
+            'from_month':from_month,
+            'from_year':from_year,
+            'to_month':to_month,
+            'to_year':to_year
+        }
+
+        if prosopiko == '6ΜΗΝΟ':
+            return render(request,'core/vevaioseis/six_months.html',context)
+        elif prosopiko == '18ΜΗΝΟ':
+            return render(request,'core/vevaioseis/eighteen_months.html',context)
+        elif prosopiko == 'TRAIN':
+            return render(request,'core/vevaioseis/trainers.html',context)
+        else:
+            return render(request,'core/vevaioseis/ypa.html',context)
+
     context = {}
     return render(request,'core/vevaioseis/filter.html',context)
 
@@ -260,6 +307,7 @@ def findasma(request):
             'found': False
         }
     return JsonResponse(response)
+
 def train_hours(request):
     context = {}
     table_data = TrainHours.objects.all().order_by('airman__lastname')

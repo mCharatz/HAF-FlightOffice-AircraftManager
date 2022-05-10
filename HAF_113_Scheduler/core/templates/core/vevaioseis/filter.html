@@ -3,67 +3,71 @@
 
 {% block content %}
 <h2>Έκδοση Βεβαιώσεων</h2>
-<div class="row justify-content-around">
-    <div class="col-4">
-        <h4>Από</h4>
+<hr>
+<form method="post">
+    {%csrf_token%}
+    <div class="row justify-content-around">
+        <div class="col-4">
+            <h4>Από</h4>
+            <div class="input-group">
+                <select class="form-select" id="from_month" name="from_month" required>
+                    <option value="">Μήνας...</option>
+                    <option value="ΙΑΝΟΥΑΡΙΟΣ">ΙΑΝΟΥΑΡΙΟΣ</option>
+                    <option value="ΦΕΒΡΟΥΑΡΙΟΣ">ΦΕΒΡΟΥΑΡΙΟΣ</option>
+                    <option value="ΜΑΡΤΙΟΣ">ΜΑΡΤΙΟΣ</option>
+                    <option value="ΑΠΡΙΛΙΟΣ">ΑΠΡΙΛΙΟΣ</option>
+                    <option value="ΜΑΙΟΣ">ΜΑΙΟΣ</option>
+                    <option value="ΙΟΥΝΙΟΣ">ΙΟΥΝΙΟΣ</option>
+                    <option value="ΙΟΥΛΙΟΣ">ΙΟΥΛΙΟΣ</option>
+                    <option value="ΑΥΓΟΥΣΤΟΣ">ΑΥΓΟΥΣΤΟΣ</option>
+                    <option value="ΣΕΠΤΕΜΒΡΙΟΣ">ΣΕΠΤΕΜΒΡΙΟΣ</option>
+                    <option value="ΟΚΤΩΒΡΙΟΣ">ΟΚΤΩΒΡΙΟΣ</option>
+                    <option value="ΝΟΕΜΒΡΙΟΣ">ΝΟΕΜΒΡΙΟΣ</option>
+                    <option value="ΔΕΚΕΜΒΡΙΟΣ">ΔΕΚΕΜΒΡΙΟΣ</option>
+                  </select>
+                <input type="number" placeholder="Έτος..." class="form-control" id="from_year" name="from_year" required>
+            </div>
+        </div>
+        <div class="col-4">
+            <h4>Εώς</h4>
+            <div class="input-group">
+                <select class="form-select" id="to_month" name="to_month" required>
+                    <option value="">Μήνας...</option>
+                    <option value="ΙΑΝΟΥΑΡΙΟΣ">ΙΑΝΟΥΑΡΙΟΣ</option>
+                    <option value="ΦΕΒΡΟΥΑΡΙΟΣ">ΦΕΒΡΟΥΑΡΙΟΣ</option>
+                    <option value="ΜΑΡΤΙΟΣ">ΜΑΡΤΙΟΣ</option>
+                    <option value="ΑΠΡΙΛΙΟΣ">ΑΠΡΙΛΙΟΣ</option>
+                    <option value="ΜΑΙΟΣ">ΜΑΙΟΣ</option>
+                    <option value="ΙΟΥΝΙΟΣ">ΙΟΥΝΙΟΣ</option>
+                    <option value="ΙΟΥΛΙΟΣ">ΙΟΥΛΙΟΣ</option>
+                    <option value="ΑΥΓΟΥΣΤΟΣ">ΑΥΓΟΥΣΤΟΣ</option>
+                    <option value="ΣΕΠΤΕΜΒΡΙΟΣ">ΣΕΠΤΕΜΒΡΙΟΣ</option>
+                    <option value="ΟΚΤΩΒΡΙΟΣ">ΟΚΤΩΒΡΙΟΣ</option>
+                    <option value="ΝΟΕΜΒΡΙΟΣ">ΝΟΕΜΒΡΙΟΣ</option>
+                    <option value="ΔΕΚΕΜΒΡΙΟΣ">ΔΕΚΕΜΒΡΙΟΣ</option>
+                  </select>
+                <input type="number" placeholder="Έτος..." class="form-control" id="to_year" name="to_year"required>
+            </div>
+        </div>
+      </div>
+      <br>
+      <div class="row justify-content-center">
+      <div class="col-4">
+        <h4>Προσωπικό</h4>
         <div class="input-group">
-            <select class="form-select" id="month" name="month" required>
-                <option value="">Μήνας...</option>
-                <option value="ΙΑΝΟΥΑΡΙΟΣ">ΙΑΝΟΥΑΡΙΟΣ</option>
-                <option value="ΦΕΒΡΟΥΑΡΙΟΣ">ΦΕΒΡΟΥΑΡΙΟΣ</option>
-                <option value="ΜΑΡΤΙΟΣ">ΜΑΡΤΙΟΣ</option>
-                <option value="ΑΠΡΙΛΙΟΣ">ΑΠΡΙΛΙΟΣ</option>
-                <option value="ΜΑΙΟΣ">ΜΑΙΟΣ</option>
-                <option value="ΙΟΥΝΙΟΣ">ΙΟΥΝΙΟΣ</option>
-                <option value="ΙΟΥΛΙΟΣ">ΙΟΥΛΙΟΣ</option>
-                <option value="ΑΥΓΟΥΣΤΟΣ">ΑΥΓΟΥΣΤΟΣ</option>
-                <option value="ΣΕΠΤΕΜΒΡΙΟΣ">ΣΕΠΤΕΜΒΡΙΟΣ</option>
-                <option value="ΟΚΤΩΒΡΙΟΣ">ΟΚΤΩΒΡΙΟΣ</option>
-                <option value="ΝΟΕΜΒΡΙΟΣ">ΝΟΕΜΒΡΙΟΣ</option>
-                <option value="ΔΕΚΕΜΒΡΙΟΣ">ΔΕΚΕΜΒΡΙΟΣ</option>
+            <select class="form-select" id="prosopiko" name="prosopiko" required>
+                <option value="">Προσωπικό...</option>
+                <option value="6ΜΗΝΟ">6ΜΗΝΟ</option>
+                <option value="18ΜΗΝΟ">18ΜΗΝΟ</option>
+                <option value="TRAIN">Εκπαιδευτών</option>
+                <option value="YPA">Προς ΥΠΑ</option>
               </select>
-            <input type="number" placeholder="Έτος..." class="form-control" required>
         </div>
     </div>
-    <div class="col-4">
-        <h4>Εώς</h4>
-        <div class="input-group">
-            <select class="form-select" id="month" name="month" required>
-                <option value="">Μήνας...</option>
-                <option value="ΙΑΝΟΥΑΡΙΟΣ">ΙΑΝΟΥΑΡΙΟΣ</option>
-                <option value="ΦΕΒΡΟΥΑΡΙΟΣ">ΦΕΒΡΟΥΑΡΙΟΣ</option>
-                <option value="ΜΑΡΤΙΟΣ">ΜΑΡΤΙΟΣ</option>
-                <option value="ΑΠΡΙΛΙΟΣ">ΑΠΡΙΛΙΟΣ</option>
-                <option value="ΜΑΙΟΣ">ΜΑΙΟΣ</option>
-                <option value="ΙΟΥΝΙΟΣ">ΙΟΥΝΙΟΣ</option>
-                <option value="ΙΟΥΛΙΟΣ">ΙΟΥΛΙΟΣ</option>
-                <option value="ΑΥΓΟΥΣΤΟΣ">ΑΥΓΟΥΣΤΟΣ</option>
-                <option value="ΣΕΠΤΕΜΒΡΙΟΣ">ΣΕΠΤΕΜΒΡΙΟΣ</option>
-                <option value="ΟΚΤΩΒΡΙΟΣ">ΟΚΤΩΒΡΙΟΣ</option>
-                <option value="ΝΟΕΜΒΡΙΟΣ">ΝΟΕΜΒΡΙΟΣ</option>
-                <option value="ΔΕΚΕΜΒΡΙΟΣ">ΔΕΚΕΜΒΡΙΟΣ</option>
-              </select>
-            <input type="number" placeholder="Έτος..." class="form-control" required>
-        </div>
     </div>
-  </div>
-  <br>
-  <div class="row justify-content-center">
-  <div class="col-4">
-    <h4>Προσωπικό</h4>
-    <div class="input-group">
-        <select class="form-select" id="month" name="month" required>
-            <option value="">Προσωπικό...</option>
-            <option value="6ΜΗΝΟ">6ΜΗΝΟ</option>
-            <option value="18ΜΗΝΟ">18ΜΗΝΟ</option>
-            <option value="TRAIN">Εκπαιδευτών</option>
-            <option value="YPA">Προς ΥΠΑ</option>
-          </select>
-    </div>
-</div>
-</div>
-  <br> 
-  <div class="d-grid gap-2 col-3 mx-auto">
-    <button type="button" class="btn btn-success">Εφαρμογή</button>
-  </div>
+      <br> 
+      <div class="d-grid gap-2 col-3 mx-auto">
+        <button type="submit" class="btn btn-success">Εφαρμογή</button>
+      </div>
+</form>
 {% endblock content%}

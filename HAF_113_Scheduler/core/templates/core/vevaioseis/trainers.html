@@ -3,7 +3,7 @@
 
 {% block content %}
 <h3>Εκπαιδευτές</h3>
-
+<p>Από {{from_month}} {{from_year}} εώς {{to_month}} {{to_year}} </p>
 <div class="tableFixHead">
   <table class="table table-hover table-bordered">
     <thead class="table-dark" style="position: sticky;top: 0">
@@ -30,7 +30,7 @@
       {% for trainer in table_data%}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td><a href={% url 'profile' trainer.airman.asma %}><i class="fa-solid fa-user"></i></a></td>
+          <td><a href={% url 'profile' trainer.airman.asma %} target="_blank"><i class="fa-solid fa-user"></i></a></td>
           <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_asma" name="{{ trainer.airman.asma }}_asma" value={{trainer.airman.asma}} disabled></td>
           <td><input type="text" id="{{ trainer.airman.asma }}_lastname" name="{{ trainer.airman.asma }}_lastname" value={{trainer.airman.lastname}}></td>
           <td><input type="text" id="{{ trainer.airman.asma }}_name" name="{{ trainer.airman.asma }}_name" value={{trainer.airman.firstname}}></td>
