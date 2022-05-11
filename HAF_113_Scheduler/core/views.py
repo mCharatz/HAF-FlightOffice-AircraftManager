@@ -131,7 +131,7 @@ def vevaioseis(request):
         if prosopiko == 'YPA':
             table_data = Airman.objects.filter(asma__in=results.values('airman'),eidikotita='Ι')
         elif prosopiko == 'TRAIN':
-            table_data = AirmanTrainer.objects.filter(airman__asma__in=results.values('airman'))
+            table_data = results
         else:
             table_data = Airman.objects.filter(asma__in=results.values('airman'))
         context = {
@@ -260,7 +260,7 @@ def add_train_hour(request):
                 eidikotita = speciality
             )
         try:
-            trainer = AirmanTrainer.objects.get(asma=asma)
+            trainer = AirmanTrainer.objects.get(airman=airman)
         except:
             trainer = AirmanTrainer.objects.create(
                 airman = airman
@@ -321,8 +321,14 @@ def profile(request,asma):
         train_hours = TrainHours.objects.filter(airman=airman)
     except:
         return redirect('/')
+    try:
+        trainer = AirmanTrainer.objects.get(airman=airman)
+    except:
+        trainer = None
+
     context = {
         'pilot':airman,
+        'trainer':trainer,
         'flight_hours':flight_hours,
         'train_hours':train_hours
     }
@@ -340,3 +346,9 @@ def search(request):
             return redirect(url)
 
     return redirect("/")
+
+def changetabledata(request):
+    to_change = request.GET.get('to_change', None)
+    value = request.GET.get('value', None)
+
+    return JsonResponse(to_change)

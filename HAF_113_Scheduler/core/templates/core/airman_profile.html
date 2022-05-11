@@ -5,6 +5,7 @@
 <h3> {{pilot}} </h3>
 <hr>
 <h4 style="text-align:center"> Πληροφορίες </h4>
+<div id="profileTable" profiletable-url="{% url 'changeTableData' %}">
 <div class="tableFixHeadTiny">
   <table class="table table-hover table-bordered">
     <thead class="table-dark" style="position: sticky;top: 0">
@@ -19,23 +20,32 @@
         <th scope="col">ΤΟΠΟΘΕΤΗΣΗ</th>
         <th scope="col">ΚΑΤΗΓΟΡΙΑ ΔΙΚΑΙΟΥΜΕΝΗ</th>
         <th scope="col">ΚΑΤΗΓΟΡΙΑ ΚΑΤΟΧΥΡΩΜΕΝΗ</th>
+        <th scope="col">ΜΟΝΑΔΑ ΕΚΔΟΣΗΣ ΠΤΗΤΙΚΟΥ</th>
         <th scope="col">ΓΕΝΙΚΟ ΣΥΝΟΛΟ ΩΡΩΝ</th>
+        {% if trainer %}
+          <th scope="col">ΠΤΥΧΙΟ</th>
+          <th scope="col">ΔΙΑΤΑΓΗ ΟΡΙΣΜΟΥ</th>
+        {% endif %}
       </tr>
     </thead>
     <tbody >
         <tr>
-          <td><input style="width:100%" type="text" id="asma" name="asma" value={{pilot.asma}} disabled></td>
-          <td><input type="text" id="lastname" name="lastname" value={{pilot.lastname}}></td>
-          <td><input type="text" id="name" name="name" value={{pilot.firstname}}></td>
-          <td><input style="width:100%" type="text" id="rank" name="rank" value={{pilot.rank}}></td>
-          <td><input style="width:100%" type="text" id="eidikotita" name="eidikotita" value={{pilot.eidikotita}}></td>
-          <td><input style="width:100%" type="text" id="idiotita" name="idiotita" value={{pilot.idiotita}}></td>
-          <td><input style="width:100%" type="text" id="diathesimotita" name="diathesimotita" value={{pilot.availability}}></td>
-          <td><input style="width:100%" type="text" id="topothetisi" name="topothetisi" value={{pilot.topothetisi}}></td>
-          <td><input style="width:100%" type="text" id="katigoria_dikaioumeni" name="katigoria_dikaioumeni" value={{pilot.katigoria_dikaioumeni}}></td>
-          <td><input style="width:100%" type="text" id="katigoria_katoxiromeni" name="katigoria_katoxiromeni" value={{pilot.katigoria_katoxiromeni}}></td>
-          <td><input style="width:100%" type="text" id="monada_ekdosis_ptitikou" name="monada_ekdosis_ptitikou" value={{pilot.monada_ekdosis_ptitikou}}></td>
-          <td><input style="width:100%" type="text" id="geniko_synolo_oron" name="geniko_synolo_oron" value={{pilot.geniko_synolo_oron}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_asma" name="{{ pilot.asma }}_asma" value={{pilot.asma}} disabled></td>
+          <td><input type="text" id="{{ pilot.asma }}_lastname" name="{{ pilot.asma }}_lastname" value={{pilot.lastname}}></td>
+          <td><input type="text" id="{{ pilot.asma }}_name" name="{{ pilot.asma }}_name" value={{pilot.firstname}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_rank" name="{{ pilot.asma }}_rank" value={{pilot.rank}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_eidikotita" name="{{ pilot.asma }}_eidikotita" value={{pilot.eidikotita}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_idiotita" name="{{ pilot.asma }}_idiotita" value={{pilot.idiotita}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_diathesimotita" name="{{ pilot.asma }}_diathesimotita" value={{pilot.availability}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_topothetisi" name="{{ pilot.asma }}_topothetisi" value={{pilot.topothetisi}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_katigoria_dikaioumeni" name="{{ pilot.asma }}_katigoria_dikaioumeni" value={{pilot.katigoria_dikaioumeni}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_katigoria_katoxiromeni" name="{{ pilot.asma }}_katigoria_katoxiromeni" value={{pilot.katigoria_katoxiromeni}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_monada_ekdosis_ptitikou" name="{{ pilot.asma }}_monada_ekdosis_ptitikou" value={{pilot.monada_ekdosis_ptitikou}}></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.asma }}_geniko_synolo_oron" name="{{ pilot.asma }}_geniko_synolo_oron" value={{pilot.geniko_synolo_oron}}></td>
+          {% if trainer %}
+          <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_ptixio" name="{{ trainer.airman.asma }}_ptixio" value={{trainer.ptixio}}></td>
+          <td><input type="text" id="{{ trainer.airman.asma }}_diatagi_orismou" name="{{ trainer.airman.asma }}_diatagi_orismou" value={{trainer.diatagi_orismou}}></td>
+        {% endif %}
         </tr>
     </tbody>
   </table>
@@ -129,9 +139,38 @@
     </tbody>
   </table>
 </div>
+</div>
 {% else %}
 <div class="alert alert-secondary" role="alert">
   Δεν υπάρχουν ώρες πτήσεων.
 </div>
 {% endif %}
 {% endblock content%}
+
+{% block scripts%}
+<script>
+$(document).ready(function(){
+  $("input").change(function(){
+    var id = $(this).attr('id');
+    var value = $(this).val();
+    var url = $("#profileTable").attr("profiletable-url"); 
+    console.log(url)
+
+
+    $.ajax({                  
+      url: url,                   
+      data: {
+          'to_change': id,
+          'value': value
+      },
+      success: function (data) {
+        console.log(data);
+      }
+  });
+
+
+
+  });
+});
+</script>
+{% endblock scripts%}
