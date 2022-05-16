@@ -88,24 +88,24 @@ def flight_hours(request):
 def prosopiko_eksaminou(request):
     eksaminoi = Airman.objects.filter(flighthours__category="6ΜΗΝΟ").order_by('lastname').distinct()
     context = {'table_data':eksaminoi}
-    return render(request,'core/vevaioseis/six_months.html',context)
+    return render(request,'core/search_range/six_months.html',context)
 
 def prosopiko_dekaotaminou(request):
     dekaoktaminoi = Airman.objects.filter(flighthours__category="18ΜΗΝΟ").order_by('lastname').distinct()
     context = {'table_data':dekaoktaminoi}
-    return render(request,'core/vevaioseis/eighteen_months.html',context)
+    return render(request,'core/search_range/eighteen_months.html',context)
 
 def trainers(request):
     trainers = AirmanTrainer.objects.all()
     context = {'table_data':trainers}
-    return render(request,'core/vevaioseis/trainers.html',context)
+    return render(request,'core/search_range/trainers.html',context)
 
 def pilots(request):
     pilots = Airman.objects.filter(eidikotita="Ι").distinct()
     context = {'table_data':pilots}
-    return render(request,'core/vevaioseis/ypa.html',context)
+    return render(request,'core/search_range/ypa.html',context)
 
-def vevaioseis(request):
+def search_range(request):
     if request.method == "POST":
         from_month = request.POST.get('from_month', None)
         from_year = request.POST.get('from_year', None)
@@ -116,26 +116,18 @@ def vevaioseis(request):
         prosopiko = request.POST.get('prosopiko', None)
 
         if prosopiko == '6ΜΗΝΟ':
-            results = FlightHours.objects.filter(category='6ΜΗΝΟ')
+            results = FlightHours.objects.filter(category='6ΜΗΝΟ').order_by('airman__lastname')
         elif prosopiko == '18ΜΗΝΟ':
-            results = FlightHours.objects.filter(category='18ΜΗΝΟ')
-        elif prosopiko == 'TRAIN':
-            results = TrainHours.objects.all()
+            results = FlightHours.objects.filter(category='18ΜΗΝΟ').order_by('airman__lastname')
         else:
-            results = FlightHours.objects.filter(category='6ΜΗΝΟ')
+            results = TrainHours.objects.all().order_by('airman__lastname')
         
         for hour in results:
             if not is_between(from_month,from_year,to_month,to_year,hour.month,hour.year):
                 results = results.exclude(id=hour.id)
 
-        if prosopiko == 'YPA':
-            table_data = Airman.objects.filter(asma__in=results.values('airman'),eidikotita='Ι')
-        elif prosopiko == 'TRAIN':
-            table_data = results
-        else:
-            table_data = Airman.objects.filter(asma__in=results.values('airman'))
         context = {
-            'table_data':table_data,
+            'table_data':results,
             'from_month':from_month,
             'from_year':from_year,
             'to_month':to_month,
@@ -143,16 +135,16 @@ def vevaioseis(request):
         }
 
         if prosopiko == '6ΜΗΝΟ':
-            return render(request,'core/vevaioseis/six_months.html',context)
+            return render(request,'core/search_range/six_months.html',context)
         elif prosopiko == '18ΜΗΝΟ':
-            return render(request,'core/vevaioseis/eighteen_months.html',context)
+            return render(request,'core/search_range/eighteen_months.html',context)
         elif prosopiko == 'TRAIN':
-            return render(request,'core/vevaioseis/trainers.html',context)
+            return render(request,'core/search_range/trainers.html',context)
         else:
-            return render(request,'core/vevaioseis/ypa.html',context)
+            return render(request,'core/search_range/ypa.html',context)
 
     context = {}
-    return render(request,'core/vevaioseis/filter.html',context)
+    return render(request,'core/search_range/filter.html',context)
 
 def add_flight_hour_suceess(request):
     context = {
