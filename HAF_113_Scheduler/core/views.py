@@ -292,7 +292,14 @@ def findasma(request):
             'lastname' : airman.lastname,
             'firstname' : airman.firstname,
             'rank' : airman.rank,
-            'speciality' : airman.eidikotita
+            'speciality' : airman.eidikotita,
+            'idiotita':airman.idiotita,
+            'topothetisi':airman.topothetisi,
+            'diathesimotita': airman.availability,
+            'katigoria_dikaioumeni': airman.katigoria_dikaioumeni,
+            'katigoria_katoxiromeni': airman.katigoria_katoxiromeni,
+            'monada_ekdosis_ptitikou': airman.monada_ekdosis_ptitikou,
+            'geniko_synolo_oron': airman.geniko_synolo_oron
         }
     else:
         response = {
@@ -344,3 +351,7 @@ def changetabledata(request):
     value = request.GET.get('value', None)
 
     return JsonResponse(to_change)
+
+def vevaiosi(request):
+    context = {}
+    return render(request,'core/vevaioseis/vevaiosi_form.html',context)

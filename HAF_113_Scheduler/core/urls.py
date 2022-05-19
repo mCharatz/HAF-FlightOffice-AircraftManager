@@ -23,6 +23,7 @@ urlpatterns = [
     path('profile/<slug:asma>/',views.profile,name="profile"),
     path('add/flightHour/find',views.findasma,name="findasma"),
     path('search/',views.search,name="search"),
-    path('change/',views.changetabledata,name="changeTableData")
+    path('change/',views.changetabledata,name="changeTableData"),
+    path('vevaioseis/',views.vevaiosi,name="vevaioseis"),
     
 ]

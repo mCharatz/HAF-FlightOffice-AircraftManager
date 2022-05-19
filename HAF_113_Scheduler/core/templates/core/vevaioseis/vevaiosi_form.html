@@ -1,0 +1,219 @@
+{% extends 'core/core.html' %}
+{%load static%}
+
+{% block content %}
+<h2>Έκδοση βεβάιωσης</h2>
+<hr>
+
+<div class="col-sm input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">ΒΕΒΑΙΩΣΗ *</span>
+    </div>
+    <select class="form-select" name="month" id="month" required>
+        <option value="" selected>Επιλέξτε βεβαίωση...</option>
+        <option value="1">6ΜΗΝΟ</option>
+        <option value="2">18ΜΗΝΟ</option>
+        <option value="3">Εκπαιδευτές</option>
+        <option value="4">Προς ΥΠΑ</option>
+    </select>
+</div>
+
+<div class="row">
+    <form id="findAsma" method="post" action="{% url 'search' %}" findasma-url="{% url 'findasma' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h4> Προσθήκη προσωπικού </h4>
+        <div class="col-sm input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">ΑΜΑ *</span>
+            </div>
+            <input type="number" class="form-control" placeholder="Προσθέστε το ΑΜΑ..." aria-label="Username" id="asma" name="asma" required>
+        </div>
+        <div id="airmandetails">
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΕΠΩΝΥΜΟ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="lastname" name="lastname" required disabled>
+            </div>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΟΝΟΜΑ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="firstname" name="firstname" required disabled>
+            </div>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΒΑΘΜΟΣ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="rank" name="rank" required disabled>
+            </div>
+            <div class="col-sm input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">ΕΙΔΙΚΟΤΗΤΑ</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" id="speciality" name="speciality" required disabled>
+            </div>
+
+            <input type="hidden" id="idiotita" name="idiotita">
+            <input type="hidden" id="diathesimotita" name="diathesimotita">
+            <input type="hidden" id="topothetisi" name="topothetisi">
+            <input type="hidden" id="katigoria_dikaioumeni" name="katigoria_dikaioumeni">
+            <input type="hidden" id="katigoria_katoxiromeni" name="katigoria_katoxiromeni">
+            <input type="hidden" id="monada_ekdosis_ptitikou" name="monada_ekdosis_ptitikou">
+            <input type="hidden" id="geniko_synolo_oron" name="geniko_synolo_oron">
+
+            <button id="search" name="search" class="btn btn-success" type="button" onclick="add_to_array()" disabled>Προσθήκη</button>
+        </div>
+    <form>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-10">
+        <h4>Προσωπικό προς έκδοση βεβάιωσης</h4>
+    </div>
+    <div class="col-lg-2">
+        <button type="button" class="btn btn-success">Έκδοση βεβαιώσεων</button>
+    </div>
+</div>
+<br>
+<div class="tableFixHead">
+    <table class="table table-hover table-bordered" id="prosopiko">
+      <thead class="table-dark" style="position: sticky;top: 0">
+        <tr>
+          <th scope="col">ΑΜΑ</th>
+          <th scope="col">ΕΠΩΝΥΜΟ</th>
+          <th scope="col">ΟΝΟΜΑ</th>
+          <th scope="col">ΒΑΘΜΟΣ</th>
+          <th scope="col">ΕΙΔΙΚ</th>
+          <th scope="col">ΙΔΙΟΤΗΤΑ</th>
+          <th scope="col">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</th>
+          <th scope="col">ΤΟΠΟΘΕΤΗΣΗ</th>
+          <th scope="col">ΚΑΤΗΓΟΡΙΑ ΔΙΚΑΙΟΥΜΕΝΗ</th>
+          <th scope="col">ΚΑΤΗΓΟΡΙΑ ΚΑΤΟΧΥΡΩΜΕΝΗ</th>
+          <th scope="col">ΜΟΝΑΔΑ ΕΚΔΟΣΗΣ ΠΤΗΤΙΚΟΥ</th>
+          <th scope="col">ΓΕΝΙΚΟ ΣΥΝΟΛΟ ΩΡΩΝ</th>
+        </tr>
+      </thead>
+      <tbody >
+          <tr>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script>
+	$("#asma").change(function () {
+	    var url = $("#findAsma").attr("findasma-url"); 
+	    var asma = $(this).val();  
+	    
+	    $.ajax({                  
+	        url: url,                   
+	        data: {
+	            'asma': asma
+	        },
+	        success: function (data) {
+              if (data.found == true){
+                document.getElementById("asma").value = data.asma;
+                document.getElementById("firstname").value = data.firstname;
+                document.getElementById("lastname").value = data.lastname;
+                document.getElementById("rank").value = data.rank;
+                document.getElementById("speciality").value = data.speciality;
+                document.getElementById("idiotita").value = data.idiotita;
+                document.getElementById("topothetisi").value = data.topothetisi;
+                document.getElementById("diathesimotita").value = data.diathesimotita;
+                document.getElementById("katigoria_dikaioumeni").value = data.katigoria_dikaioumeni;
+                document.getElementById("katigoria_katoxiromeni").value = data.katigoria_katoxiromeni;
+                document.getElementById("monada_ekdosis_ptitikou").value = data.monada_ekdosis_ptitikou;
+                document.getElementById("geniko_synolo_oron").value = data.geniko_synolo_oron;
+                const button = document.getElementById("search")
+                button.disabled = false
+              }
+              else{
+                document.getElementById("firstname").value = "";
+                document.getElementById("lastname").value = "";
+                document.getElementById("rank").value = "";
+                document.getElementById("speciality").value = "";
+                document.getElementById("idiotita").value = "";
+                document.getElementById("topothetisi").value = "";
+                document.getElementById("diathesimotita").value = "";
+                document.getElementById("katigoria_dikaioumeni").value = "";
+                document.getElementById("katigoria_katoxiromeni").value = "";
+                document.getElementById("monada_ekdosis_ptitikou").value = "";
+                document.getElementById("geniko_synolo_oron").value = "";
+                const button = document.getElementById("search")
+                button.disabled = true
+              }
+	                
+	        }
+	    });
+	
+	});
+</script>
+
+<script>
+    function add_to_array() {
+      var asma = document.getElementById("asma").value;
+      var lastname = document.getElementById("lastname").value;
+      var firstname = document.getElementById("firstname").value;
+      var rank = document.getElementById("rank").value;
+      var speciality = document.getElementById("speciality").value;
+      var idiotita = document.getElementById("idiotita").value;
+      var topothetisi = document.getElementById("topothetisi").value;
+      var diathesimotita = document.getElementById("diathesimotita").value;
+      var katigoria_dikaioumeni = document.getElementById("katigoria_dikaioumeni").value;
+      var katigoria_katoxiromeni = document.getElementById("katigoria_katoxiromeni").value;
+      var monada_ekdosis_ptitikou = document.getElementById("monada_ekdosis_ptitikou").value;
+      var geniko_synolo_oron = document.getElementById("geniko_synolo_oron").value;
+
+
+      var table = document.getElementById("prosopiko");
+      var row = table.insertRow(1);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      var cell6 = row.insertCell(5);
+      var cell7 = row.insertCell(6);
+      var cell8 = row.insertCell(7);
+      var cell9 = row.insertCell(8);
+      var cell10 = row.insertCell(9);
+      var cell11 = row.insertCell(10);
+      var cell12 = row.insertCell(11);
+
+
+      cell1.innerHTML = asma;
+      cell2.innerHTML = lastname;
+      cell3.innerHTML = firstname;
+      cell4.innerHTML = rank;
+      cell5.innerHTML = speciality;
+      cell6.innerHTML = idiotita;
+      cell7.innerHTML = diathesimotita;
+      cell8.innerHTML = topothetisi;
+      cell9.innerHTML = katigoria_dikaioumeni;
+      cell10.innerHTML = katigoria_katoxiromeni;
+      cell11.innerHTML = monada_ekdosis_ptitikou;
+      cell12.innerHTML = geniko_synolo_oron;
+
+
+      document.getElementById("firstname").value = "";
+      document.getElementById("lastname").value = "";
+      document.getElementById("rank").value = "";
+      document.getElementById("speciality").value = "";
+      document.getElementById("idiotita").value = "";
+      document.getElementById("diathesimotita").value = "";
+      document.getElementById("topothetisi").value = "";
+      document.getElementById("katigoria_dikaioumeni").value = "";
+      document.getElementById("katigoria_katoxiromeni").value = "";
+      document.getElementById("monada_ekdosis_ptitikou").value = "";
+      document.getElementById("geniko_synolo_oron").value = "";
+
+      const button = document.getElementById("search")
+      button.disabled = true
+    }
+</script>
+
+{% endblock scripts%}
