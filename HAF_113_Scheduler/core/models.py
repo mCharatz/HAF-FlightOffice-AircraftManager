@@ -5,57 +5,78 @@ from django.dispatch import receiver
 
 
 class UploadedFile(models.Model):
-    filename = models.CharField(max_length=200,null=True)
+    filename = models.CharField(max_length=200, null=True)
     file = models.FileField()
+
 
 class Airman(models.Model):
     asma = models.BigIntegerField(primary_key=True)
-    firstname = models.CharField(max_length=200,default="",blank=True,null=True)
-    lastname = models.CharField(max_length=200,default="",blank=True,null=True)
-    rank = models.CharField(max_length=200,default="",blank=True,null=True)
-    eidikotita = models.CharField(max_length=200,default="",blank=True,null=True)
-    idiotita = models.CharField(max_length=200,default="",blank=True,null=True)
-    availability = models.CharField(max_length=200,default="",blank=True,null=True)
-    topothetisi = models.CharField(max_length=200,default="",blank=True,null=True)
-    katigoria_dikaioumeni = models.CharField(max_length=200,default="",blank=True,null=True)
-    katigoria_katoxiromeni = models.CharField(max_length=200,default="",blank=True,null=True)
-    monada_ekdosis_ptitikou = models.CharField(max_length=200,default="",blank=True,null=True)
-    geniko_synolo_oron = models.FloatField(blank=True,null=True,default=0)
+    firstname = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    lastname = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    rank = models.CharField(max_length=200, default="", blank=True, null=True)
+    eidikotita = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    idiotita = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    availability = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    topothetisi = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    katigoria_dikaioumeni = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    katigoria_katoxiromeni = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    monada_ekdosis_ptitikou = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    geniko_synolo_oron = models.FloatField(blank=True, null=True, default=0)
+
     def __str__(self):
         return (str(self.asma) + " - " + str(self.lastname) + " " + str(self.firstname))
 
-#create an AirmanTrainer when hours of trainer are added
+# create an AirmanTrainer when hours of trainer are added
+
+
 class AirmanTrainer(models.Model):
-    airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
-    ptixio = models.CharField(max_length=200,default="",blank=True,null=True) # a b g
-    diatagi_orismou = models.CharField(max_length=200,default="",blank=True,null=True)
+    airman = models.ForeignKey(Airman, on_delete=models.CASCADE)
+    ptixio = models.CharField(
+        max_length=200, default="", blank=True, null=True)  # a b g
+    diatagi_orismou = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+
     def __str__(self):
         return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " " + str(self.airman.firstname))
-        
+
+
 class FlightHours(models.Model):
-    airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
-    plane = models.CharField(max_length=200,default="",blank=True,null=True)
-    capthours = models.FloatField(blank=True,null=True,default=0)
-    cocapthours = models.FloatField(blank=True,null=True,default=0)
-    ifrhours = models.FloatField(blank=True,null=True,default=0)
-    nighthours = models.FloatField(blank=True,null=True,default=0)
-    nauthours = models.FloatField(blank=True,null=True,default=0)
-    crewhours = models.FloatField(blank=True,null=True,default=0)
-    category = models.CharField(max_length=200,default="",blank=True,null=True)
-    unit = models.CharField(max_length=200,default="",blank=True,null=True)
-    month = models.CharField(max_length=200,default="",blank=True,null=True)
-    year = models.CharField(max_length=200,default="",blank=True,null=True)
+    airman = models.ForeignKey(Airman, on_delete=models.CASCADE)
+    plane = models.CharField(max_length=200, default="", blank=True, null=True)
+    capthours = models.FloatField(blank=True, null=True, default=0)
+    cocapthours = models.FloatField(blank=True, null=True, default=0)
+    ifrhours = models.FloatField(blank=True, null=True, default=0)
+    nighthours = models.FloatField(blank=True, null=True, default=0)
+    nauthours = models.FloatField(blank=True, null=True, default=0)
+    crewhours = models.FloatField(blank=True, null=True, default=0)
+    category = models.CharField(
+        max_length=200, default="", blank=True, null=True)
+    unit = models.CharField(max_length=200, default="", blank=True, null=True)
+    month = models.CharField(max_length=200, default="", blank=True, null=True)
+    year = models.CharField(max_length=200, default="", blank=True, null=True)
+
     def __str__(self):
-        return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " - "+ str(self.month) + " " + str(self.year))
+        return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " - " + str(self.month) + " " + str(self.year))
+
 
 class TrainHours(models.Model):
-    airman = models.ForeignKey(Airman,on_delete=models.CASCADE)
-    plane = models.CharField(max_length=200,default="",blank=True,null=True)
-    hours = models.FloatField(blank=True,null=True,default=0)
-    month = models.CharField(max_length=200,default="",blank=True,null=True)
-    year = models.CharField(max_length=200,default="",blank=True,null=True)
+    airman = models.ForeignKey(Airman, on_delete=models.CASCADE)
+    plane = models.CharField(max_length=200, default="", blank=True, null=True)
+    hours = models.FloatField(blank=True, null=True, default=0)
+    month = models.CharField(max_length=200, default="", blank=True, null=True)
+    year = models.CharField(max_length=200, default="", blank=True, null=True)
+
     def __str__(self):
-        return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " - "+ str(self.month) + " " + str(self.year))
+        return (str(self.airman.asma) + " - " + str(self.airman.lastname) + " - " + str(self.month) + " " + str(self.year))
 
 
 @receiver(models.signals.post_delete, sender=UploadedFile)

@@ -9,17 +9,19 @@ import uuid
 import logging
 import os
 
+
 def create_tsv_files(file):
     try:
-        guard = 1 # 1 gia ores, 2 gia trainers
+        guard = 1  # 1 gia ores, 2 gia trainers
         logger = logging.getLogger("mylogger")
         filename = 'media/' + str(uuid.uuid4()) + ".tsv"
-        tabula.convert_into(file.file,filename,output_format="tsv", lattice=True,stream=True,pages="all")
+        tabula.convert_into(file.file, filename, output_format="tsv",
+                            lattice=True, stream=True, pages="all")
         tsv_file = open(filename)
-        read_tsv_list = list(csv.reader(tsv_file,delimiter='\t'))
+        read_tsv_list = list(csv.reader(tsv_file, delimiter='\t'))
         multi_list = proccess_tsv_file(read_tsv_list)
         if not multi_list:
-            #TRAINERS
+            # TRAINERS
             guard = 2
             multi_list = proccess_tsv_file_train(read_tsv_list)
         tsv_file.close()
@@ -30,8 +32,9 @@ def create_tsv_files(file):
         else:
             return_data = multi_list
     except:
-        return None,None
-    return return_data,guard
+        return None, None
+    return return_data, guard
+
 
 def proccess_tsv_file(data):
     try:
@@ -43,10 +46,12 @@ def proccess_tsv_file(data):
             elif ['ΜΟΝAΔΑ / ΜΟΙΡΑ'] == elem:
                 start_tables_indexes.append(index)
         start_tables_indexes.append(len(data))
-        multi_list = [data[start_tables_indexes[i]:start_tables_indexes[i+1]] for i in range(len(start_tables_indexes)-1)]
+        multi_list = [data[start_tables_indexes[i]:start_tables_indexes[i+1]]
+                      for i in range(len(start_tables_indexes)-1)]
     except:
         return None
     return multi_list
+
 
 def proccess_tsv_file_train(data):
     logger = logging.getLogger("mylogger")
@@ -59,6 +64,7 @@ def proccess_tsv_file_train(data):
         else:
             trainer_list.append(trainer)
     return trainer_list
+
 
 def extract_data_from_multi_list(multi_list):
     try:
@@ -78,7 +84,6 @@ def extract_data_from_multi_list(multi_list):
             except:
                 return None
 
-            
             for pilot in table:
                 if len(pilot) != 14:
                     continue
