@@ -110,13 +110,33 @@
 	            'asma': asma
 	        },
 	        success: function (data) {
-              if (data.found == true){
-                document.getElementById("asma").value = data.asma;
-                document.getElementById("firstname").value = data.firstname;
-                document.getElementById("lastname").value = data.lastname;
-                document.getElementById("rank").value = data.rank;
-                document.getElementById("speciality").value = data.speciality;
-              }
+            if (data.found == true){
+              document.getElementById("asma").value = data.asma;
+
+              document.getElementById("firstname").value = data.firstname;
+              document.getElementById("firstname").disabled = true
+
+              document.getElementById("lastname").value = data.lastname;
+              document.getElementById("lastname").disabled = true
+
+              document.getElementById("rank").value = data.rank;
+              document.getElementById("rank").disabled = true
+
+              document.getElementById("speciality").value = data.speciality;
+              document.getElementById("speciality").disabled = true
+            }
+            else{
+              document.getElementById("firstname").value = ""
+              document.getElementById("lastname").value = ""
+              document.getElementById("rank").value = ""
+              document.getElementById("speciality").value = ""
+
+              document.getElementById("asma").disabled = false
+              document.getElementById("firstname").disabled = false
+              document.getElementById("lastname").disabled = false
+              document.getElementById("rank").disabled = false
+              document.getElementById("speciality").disabled = false
+            }
 	                
 	        }
 	  });

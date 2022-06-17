@@ -372,7 +372,7 @@ def changetabledata(request):
     to_change = request.GET.get('to_change', None)
     value = request.GET.get('value', None)
 
-    return JsonResponse(to_change)
+    return HttpResponse(str(to_change))
 
 
 def vevaiosi(request):
