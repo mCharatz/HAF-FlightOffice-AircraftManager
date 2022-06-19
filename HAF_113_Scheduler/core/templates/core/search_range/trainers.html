@@ -8,6 +8,7 @@
   <table class="table table-hover table-bordered">
     <thead class="table-dark" style="position: sticky;top: 0">
       <tr>
+        <th scope="col">A/A</th>
         <th scope="col">ΠΡΟΦΙΛ</th>
         <th scope="col">ΑΜΑ</th>
         <th scope="col">ΕΠΩΝΥΜΟ</th>
@@ -21,6 +22,7 @@
     <tbody >
       {% for trainer in table_data%}
         <tr>
+          <td scope="row">{{ forloop.counter }}</td>
           <td><a href={% url 'profile' trainer.airman.asma %}><i class="fa-solid fa-user"></i></a></td>
           <td><input type="text" id="{{ trainer.airman.asma }}_asma" name="{{ trainer.airman.asma }}" value={{trainer.airman.asma}} disabled></td>
           <td><input type="text" id="{{ trainer.airman.asma }}_lastname" name="{{ trainer.airman.lastname }}" value={{trainer.airman.lastname}} disabled></td>

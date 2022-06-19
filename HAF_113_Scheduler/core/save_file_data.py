@@ -97,7 +97,7 @@ def for_trainhours(trainhours, month, year):
                 rank=trainhour[1][0]
             )
         try:
-            airman_trainer = AirmanTrainer.objects.get(asma=airman_item)
+            airman_trainer = AirmanTrainer.objects.get(airman=airman_item)
         except:
             airman_trainer = AirmanTrainer.objects.create(
                 airman=airman_item

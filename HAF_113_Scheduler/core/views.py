@@ -1,5 +1,7 @@
 from calendar import month
 import imp
+from msilib.schema import Error
+from re import A
 from unicodedata import category
 from warnings import catch_warnings
 from django.shortcuts import render, redirect
@@ -372,7 +374,61 @@ def changetabledata(request):
     to_change = request.GET.get('to_change', None)
     value = request.GET.get('value', None)
 
-    return HttpResponse(str(to_change))
+    if (to_change == None) or (value == None):
+        return HttpResponse("Error")
+    
+    to_change = str(to_change).split("_")
+
+    if len(to_change) == 2: #change airman personal info      
+        try:
+            airman = Airman.objects.get(asma=to_change[0])
+            if to_change[1] == 'lastname':
+                airman.lastname = str(value)
+            elif to_change[1] == 'firstname':
+                airman.firstname = str(value)
+            elif to_change[1] == 'rank':
+                airman.rank = str(value)
+            elif to_change[1] == 'eidikotita':
+                airman.eidikotita = str(value)
+            elif to_change[1] == 'idiotita':
+                airman.idiotita = str(value)
+            elif to_change[1] == 'diathesimotita':
+                airman.availability = str(value)
+            elif to_change[1] == 'topothetisi':
+                airman.topothetisi = str(value)
+            elif to_change[1] == 'katigoriadikaioumeni':
+                airman.katigoria_dikaioumeni = str(value)
+            elif to_change[1] == 'katigoriakatoxiromeni':
+                airman.katigoria_katoxiromeni = str(value)
+            elif to_change[1] == 'monadaekdosisptitikou':
+                airman.monada_ekdosis_ptitikou = str(value)
+            elif to_change[1] == 'genikosynolooron':
+                airman.geniko_synolo_oron = float(value)
+            elif to_change[1] == 'ptixio':
+                try:
+                    airman_trainer = AirmanTrainer.objects.get(airman=airman)
+                except Error as e:
+                    return HttpResponse(e)
+                airman_trainer.ptixio = str(value)
+                airman_trainer.save()
+            elif to_change[1] == 'diatagiorismou':
+                try:
+                    airman_trainer = AirmanTrainer.objects.get(airman=airman)
+                except Error as e:
+                    return HttpResponse(e)
+                airman_trainer.diatagi_orismou = str(value)
+                airman_trainer.save()
+            else:
+                return HttpResponse("Error")
+            
+            airman.save()
+            return HttpResponse("saved")
+        except:
+            return HttpResponse("Error")
+    elif len(to_change) == 5:
+        return HttpResponse(to_change)
+    return HttpResponse(to_change)
+    
 
 
 def vevaiosi(request):
