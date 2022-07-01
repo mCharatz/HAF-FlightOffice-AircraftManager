@@ -90,8 +90,8 @@
           <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_rank" name="{{ trainer.airman.rank }}" value={{trainer.airman.rank}} disabled></td>
           <td><input style="width:100%"type="text" id="{{ trainer.airman.asma }}_trainer_{{trainer.month}}_{{trainer.year}}_plane" name="{{ trainer.plane }}" value={{trainer.plane}}></td>
           <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_trainer_{{trainer.month}}_{{trainer.year}}_hours" name="{{ trainer.hours }}" value={{trainer.hours}}></td>
-          <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_trainer_{{trainer.month}}_{{trainer.year}}_month" name="{{ trainer.month }}" value={{trainer.month}}></td>
-          <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_trainer_{{trainer.month}}_{{trainer.year}}_year" name="{{ trainer.year }}" value={{trainer.year}}></td>
+          <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_trainer_{{trainer.month}}_{{trainer.year}}_month" name="{{ trainer.month }}" value={{trainer.month}} disabled></td>
+          <td><input style="width:100%" type="text" id="{{ trainer.airman.asma }}_trainer_{{trainer.month}}_{{trainer.year}}_year" name="{{ trainer.year }}" value={{trainer.year}} disabled></td>
         </tr>
       {% endfor %}
     </tbody>
@@ -146,8 +146,8 @@
           <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_flighthour_{{pilot.month}}_{{pilot.year}}_crewhours" name="{{ pilot.crewhours }}" value={{pilot.crewhours}}></td>
           <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_flighthour_{{pilot.month}}_{{pilot.year}}_category" name="{{ pilot.category }}" value={{pilot.category}}></td>
           <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_flighthour_{{pilot.month}}_{{pilot.year}}_unit" name="{{ pilot.unit }}" value={{pilot.unit}}></td>
-          <td><input type="text" id="{{ pilot.airman.asma }}_flighthour_{{pilot.month}}_{{pilot.year}}_month" name="{{ pilot.month }}" value={{pilot.month}}></td>
-          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_flighthour_{{pilot.month}}_{{pilot.year}}_year" name="{{ pilot.year }}" value={{pilot.year}}></td>
+          <td><input type="text" id="{{ pilot.airman.asma }}_flighthour_{{pilot.month}}_{{pilot.year}}_month" name="{{ pilot.month }}" value={{pilot.month}} disabled></td>
+          <td><input style="width:100%" type="text" id="{{ pilot.airman.asma }}_flighthour_{{pilot.month}}_{{pilot.year}}_year" name="{{ pilot.year }}" value={{pilot.year}} disabled></td>
         </tr>
       {% endfor %}
     </tbody>

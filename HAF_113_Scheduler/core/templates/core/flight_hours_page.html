@@ -34,7 +34,7 @@
       <tbody >
         {% for pilot in table_data%}
           <tr>
-            <td><a href={% url 'profile' pilot.airman.asma %}><i class="fa-solid fa-user"></i></a></td>
+            <td><a href={% url 'profile' pilot.airman.asma %} target="_blank"><i class="fa-solid fa-user"></i></a></td>
             <td><input type="text" id="{{ pilot.airman.asma }}_asma" name="{{ pilot.airman.asma }}" value={{pilot.airman.asma}} disabled></td>
             <td><input type="text" id="{{ pilot.airman.asma }}_lastname" name="{{ pilot.airman.lastname }}" value={{pilot.airman.lastname}}></td>
             <td><input type="text" id="{{ pilot.airman.asma }}_name" name="{{ pilot.airman.firstname }}" value={{pilot.airman.firstname}}></td>

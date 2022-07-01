@@ -1,4 +1,5 @@
 from calendar import month
+from distutils.log import error
 import imp
 from msilib.schema import Error
 from re import A
@@ -426,6 +427,56 @@ def changetabledata(request):
         except:
             return HttpResponse("Error")
     elif len(to_change) == 5:
+        #TODO MAKE CHANGES FOR TRAIN AND FLIGHT HOURS HERE ON CHANGE
+        try:
+            airman = Airman.objects.get(asma=to_change[0])
+            if to_change[1] == 'flighthour':
+                flighthour = FlightHours.objects.get(airman=airman,month=to_change[2],year=to_change[3])
+                if to_change[4] == 'plane':
+                    flighthour.plane = str(value)
+                elif to_change[4] == 'capthours':
+                    flighthour.capthours = float(value)
+                elif to_change[4] == 'cocapthours':
+                    flighthour.cocapthours = float(value)
+                elif to_change[4] == 'ifrhours':
+                    flighthour.ifrhours = float(value)
+                elif to_change[4] == 'nighthours':
+                    flighthour.nighthours = float(value)
+                elif to_change[4] == 'nauthours':
+                    flighthour.nauthours = float(value)
+                elif to_change[4] == 'crewhours':
+                    flighthour.crewhours = float(value)
+                elif to_change[4] == 'category':
+                    flighthour.category = str(value)
+                elif to_change[4] == 'unit':
+                    flighthour.unit = str(value)
+                elif to_change[4] == 'month':
+                    pass
+                elif to_change[4] == 'year':
+                    pass
+                else:
+                    return HttpResponse("The field for change does not match model fields.")
+                
+                flighthour.save()
+                
+            elif to_change[1] == 'trainer':
+                trainhour = TrainHours.objects.get(airman=airman,month=to_change[2],year=to_change[3])
+                if to_change[4] == 'plane':
+                    trainhour.plane = str(value)
+                elif to_change[4] == 'hours':
+                    trainhour.hours = float(value)
+                elif to_change[4] == 'month':
+                    pass
+                elif to_change[4] == 'year':
+                    pass
+                else:
+                    return HttpResponse("The field for change does not match model fields.")
+                
+                trainhour.save()
+            else:
+                return HttpResponse("The fields for change does not match the corresponding number of them.")
+        except error as e:
+            return HttpResponse(e)
         return HttpResponse(to_change)
     return HttpResponse(to_change)
     
