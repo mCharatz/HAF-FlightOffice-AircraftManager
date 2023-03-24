@@ -1,4 +1,4 @@
-# <p align="center"> <img src="https://user-images.githubusercontent.com/20220057/156535164-c99ee17d-7b28-454f-b39a-9614c1f528a6.png" width="30%" height="30%"> </p>
+# <p align="center"> <img src="https://en.wikipedia.org/wiki/Hellenic_Air_Force#/media/File:Seal_of_the_Hellenic_Air_Force.svg" width="30%" height="30%"> </p>
 # Hellenic Air Force - 113 Combat Wing
  A web application for the managing of flighting hours of CL-215 and CL-415 aircrafts.
  Created as an internal project of my army duties
